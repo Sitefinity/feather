@@ -1,9 +1,13 @@
 ﻿using ServiceStack.Text;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Frontend.Resources;
+using Telerik.Sitefinity.Licensing;
+using Telerik.Sitefinity.Modules.Libraries;
+using Telerik.Sitefinity.Modules.Libraries.BlobStorage;
 using Telerik.Sitefinity.Security.Claims;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
@@ -60,6 +64,24 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         public string IsMultisiteMode
         {
             get { return true.ToString(); }
+        }
+
+        public string[] DamSupportedMediaTypes 
+        {
+            get
+            {
+                IEnumerable<string> damSupportedMediaTypes = Enumerable.Empty<string>();
+                if (LicenseState.CheckIsModuleLicensed(LibrariesModule.DamIntegrationModuleId))
+                {
+                    var provider = BlobStorageManager.GetManager().StaticProviders.OfType<DamBlobStorageProviderBase>().FirstOrDefault();
+                    if (provider != null)
+                    {
+                        damSupportedMediaTypes = provider.GetSupportedMediaTypes().Select(x => x.FullName);
+                    }
+                }
+
+                return damSupportedMediaTypes.ToArray();
+            }
         }
     }
 }

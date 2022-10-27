@@ -130,7 +130,7 @@ namespace Telerik.Sitefinity.Frontend
         private static void RemoveToolboxItemIfExists(ToolboxSection mvcWidgetsSection, string toolName)
         {
             var tool = mvcWidgetsSection.Tools.FirstOrDefault<ToolboxItem>(t => t.Name == toolName);
-            if (tool != null)
+            if (tool != null && tool.Source == ConfigSource.Database)
                 mvcWidgetsSection.Tools.Remove(tool);
         }
 

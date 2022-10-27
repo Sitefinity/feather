@@ -203,7 +203,8 @@
                     return customContext && customContext.uiCulture;
                 },
                 isMultisiteEnabled: customContext.isMultisiteEnabled || sitefinity.isMultisiteEnabled,
-                siteId: customContext.getSiteId || sitefinity.getSiteId
+                siteId: customContext.getSiteId || sitefinity.getSiteId,
+                damSupportedMediaTypes: customContext.damSupportedMediaTypes || sitefinity.damSupportedMediaTypes
             };
         };
 

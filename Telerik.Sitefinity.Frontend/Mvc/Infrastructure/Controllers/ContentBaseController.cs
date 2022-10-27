@@ -142,7 +142,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         internal virtual string GetDefaultCanonicalUrl(IDataItem item)
         {
             IManager manager = null;
-            if (!ManagerBase.TryGetMappedManager(item.GetType(), string.Empty, out manager))
+            if (!ManagerBase.TryGetMappedManager(item.GetType(), item.GetProviderName(), out manager))
                 return null;
 
             var locationsService = SystemManager.GetContentLocationService();

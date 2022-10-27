@@ -9,5 +9,9 @@
 <input type="hidden" id="sf-current-user-id" value="@Model.CurrentUserId" />
 <input type="hidden" id="sf-site-id" value="@Model.CurrentSiteId" />
 <input type="hidden" id="sf-is-multisite-mode" value="@Model.IsMultisiteMode" />
+@foreach (var supportedMediaType in Model.DamSupportedMediaTypes)
+{
+    <input type="hidden" name="sf-dam-supported-media-types" value="@supportedMediaType" />
+}
 
 @Html.Script(Url.WidgetContent("Resources/ServerContext.js"))

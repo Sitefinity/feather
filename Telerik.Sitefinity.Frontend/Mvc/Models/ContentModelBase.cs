@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web.Mvc;
 using ServiceStack.Text;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
@@ -16,7 +17,6 @@ using Telerik.Sitefinity.RelatedData;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.Model;
-using Telerik.Sitefinity.Web.OutputCache;
 using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
@@ -287,8 +287,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 case ContentViewDisplayMode.Automatic:
                     if (this.SelectionMode == SelectionMode.SelectedItems && string.IsNullOrEmpty(this.FilterExpression))
                     {
-                        var masterIdsList = this.GetMasterIdsFromSelection();
-                        location.Filters.Add(new ItemsSelectionLocationFilter(masterIdsList.Select(x => x.ToString())));
+                        var masterAndLiveIdsList = this.GetMasterAndLiveIdsFromSelection();
+                        location.Filters.Add(new ItemsSelectionLocationFilter(masterAndLiveIdsList.Select(x => x.ToString())));
                     }
                     else
                     {
@@ -881,9 +881,9 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "It would add too much risk now to change this to property and would not bring much value to code quality and maintenance.")]
         protected virtual string GetSelectedItemsFilterExpression()
         {
-            var masterIds = this.GetMasterIdsFromSelection();
+            var masterAndLiveIds = this.GetMasterAndLiveIdsFromSelection();
 
-            var selectedItemConditions = masterIds.Select(id => "Id = {0} OR OriginalContentId = {0}".Arrange(id.ToString("D")));
+            var selectedItemConditions = masterAndLiveIds.Select(id => "Id = {0} OR OriginalContentId = {0}".Arrange(id.ToString("D")));
             var selectedItemsFilterExpression = string.Join(" OR ", selectedItemConditions);
 
             return selectedItemsFilterExpression;
@@ -901,16 +901,23 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 keys.Add(new CacheDependencyKey() { Type = typeof(Sitefinity.Services.Comments.IThread) });
         }
 
-        private IEnumerable<Guid> GetMasterIdsFromSelection()
+        private IEnumerable<Guid> GetMasterAndLiveIdsFromSelection()
         {
             var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
-            var masterIds = this.GetItemsQuery()
-                .OfType<ILifecycleDataItemGeneric>()
-                .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
-                .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id)
-                .Distinct();
 
-            return masterIds;
+            var masterIds = this.GetItemsQuery()
+              .OfType<ILifecycleDataItemGeneric>()
+              .Where(c => selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId))
+              .Select(n => n.OriginalContentId != Guid.Empty ? n.OriginalContentId : n.Id);
+
+            var liveIds = this.GetItemsQuery()
+              .OfType<ILifecycleDataItemGeneric>()
+              .Where(c => (selectedItemGuids.Contains(c.Id) || selectedItemGuids.Contains(c.OriginalContentId)) && c.Status == ContentLifecycleStatus.Live)
+              .Select(n => n.Id);
+
+            var result = new HashSet<Guid>(masterIds.Union(liveIds));
+
+            return result;
         }
 
         private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
