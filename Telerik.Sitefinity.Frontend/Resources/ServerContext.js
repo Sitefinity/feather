@@ -8,7 +8,8 @@
     var currentUserId = document.getElementById('sf-current-user-id').value;
     var categoriesTaxonomyId = "e5cd6d69-1543-427b-ad62-688a99f5e7d4";
     var isMultisiteMode = document.getElementById('sf-is-multisite-mode').value;
-    var siteId = document.getElementById('sf-site-id').value;;
+    var siteId = document.getElementById('sf-site-id').value;
+    var damSupportedMediaTypesInputs = document.getElementsByName('sf-dam-supported-media-types') || [];
 
     if (applicationPath.length === 0 || applicationPath.charAt(applicationPath.length - 1) !== '/')
         applicationPath = applicationPath + '/';
@@ -118,4 +119,17 @@
     sitefinity.getSiteId = function () {
         return siteId;
     };
+
+    sitefinity.damSupportedMediaTypes = function () {
+        var damSupportedMediaTypes = [];
+        if (damSupportedMediaTypesInputs) {
+            damSupportedMediaTypesInputs.forEach(x => {
+                if (x && x.value) {
+                    damSupportedMediaTypes.push(x.value);
+                }
+            });
+        }
+
+        return damSupportedMediaTypes;
+    }
 })();

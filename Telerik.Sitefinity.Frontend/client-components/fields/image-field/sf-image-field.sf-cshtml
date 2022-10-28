@@ -1,37 +1,38 @@
-﻿<div class="sf-Media--info-image">
-    <div style="position: relative" ng-show="sfImageIsVisible" ng-mouseover="showClearBtn=true" ng-mouseout="showClearBtn=false">
-      <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
-      <div ng-show="showClearBtn" class="sf-Media-remove-button glyphicon glyphicon-remove" tabindex="0" title="Remove images" ng-click="clearImage()"></div>
+﻿<div class="row">
+    <div class="sf-Media--info-image m-left-md">
+      <div style="position: relative" ng-show="sfImageIsVisible" ng-mouseover="showClearBtn=true" ng-mouseout="showClearBtn=false" class="sf-Media--img-wrapper">
+        <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
+        <div ng-show="showClearBtn" class="sf-Media-remove-button glyphicon glyphicon-remove" tabindex="0" title="Remove images" ng-click="clearImage()"></div>
+      </div>
+      <div ng-hide="sfImage.ThumbnailUrl" class="sf-Media-empty--image icon-no-image">
+          {{sfImage.ThumbnailUrl}}
+      </div>
     </div>
-    <div ng-hide="sfImage.ThumbnailUrl" class="sf-Media-empty--image icon-no-image">
-        {{sfImage.ThumbnailUrl}}
+
+    <div class="col-sm">
+        <ul class="list-unstyled" ng-show="sfModel && sfModel !== guidEmpty">
+          <li>
+            {{sfImage.Title.Value}}
+          </li>
+          <li>
+            <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
+            {{sfImage.Extension}}
+          </li>
+          <li>
+            <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
+            {{imageSize}}
+          </li>
+          <li>
+            <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
+            {{uploaded | date : 'M/d/yyyy h:mm'}}
+          </li>
+        </ul>
+
+        <button ng-show="sfModel && sfModel !== guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
+        <button ng-show="!sfModel || sfModel === guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().SelectImage)</button>
+        <button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
     </div>
 </div>
-
-<ul class="list-unstyled" ng-show="sfModel && sfModel !== guidEmpty">
-  <li>
-    {{sfImage.Title.Value}}
-  </li>
-  <li>
-    <strong>@(Res.Get<ClientComponentsResources>().Type) </strong>
-    {{sfImage.Extension}}
-  </li>
-  <li>
-    <strong>@(Res.Get<ClientComponentsResources>().FileSize) </strong>
-    {{imageSize}}
-  </li>
-  <li>
-    <strong>@(Res.Get<ClientComponentsResources>().Uploaded) </strong>
-    {{uploaded | date : 'M/d/yyyy h:mm'}}
-  </li>
-</ul>
-
-<button ng-show="sfModel && sfModel !== guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().ChangeImage)</button>
-<button ng-show="!sfModel || sfModel === guidEmpty" class="btn btn-xs btn-default" ng-click="changeImage()">@(Res.Get<ClientComponentsResources>().SelectImage)</button>
-<button class="btn btn-xs btn-default" ng-show="showEditPropertiesButton && sfImage" ng-click="editAllProperties()">@(Res.Get<ClientComponentsResources>().EditAllProperties)</button>
-
-
-
 
 <div class="imageSelectorModal"
     template-url="sf-image-selector-modal-template"

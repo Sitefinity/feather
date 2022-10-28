@@ -91,7 +91,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             this.RegisterVirtualPaths(this.ControllerContainerAssemblies);
 
-            var controllerTypes = this.GetControllers(this.ControllerContainerAssemblies);
+            var controllerTypes = this.GetControllers();
             this.InitializeControllers(controllerTypes);
 
             this.InitializeCustomRouting();
@@ -116,10 +116,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             this.ControllerContainerAssemblies = null;
 
             // Clears all controllers
-            foreach (var ctrl in ControllerStore.Controllers().ToList())
-            {
-                ControllerStore.RemoveController(ctrl.ControllerType);
-            }
+            // ControllerStore.ClearControllers();
 
             var sitefinityViewEngines = ViewEngines.Engines.Where(v => v != null && v.GetType() == typeof(CompositePrecompiledMvcEngineWrapper)).ToList();
             foreach (var sitefinityViewEngine in sitefinityViewEngines)
@@ -140,23 +137,35 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         public virtual IEnumerable<Assembly> RetrieveAssemblies()
         {
-            IEnumerable<string> assemblyFileNames = this.RetrieveControllerAssembliesFileNames().Distinct().ToArray();
-            IList<Task<Assembly>> retrieveAssemblyTasks = new List<Task<Assembly>>();
-
-            foreach (string assemblyFileName in assemblyFileNames)
+            using (new HealthMonitoring.MethodPerformanceRegion("ControllerContainerInitializer.RetrieveAssemblies"))
             {
-                retrieveAssemblyTasks.Add(this.LoadControllerAssemblyAsync(assemblyFileName));
+                IEnumerable<string> assemblyFileNames = this.RetrieveControllerAssembliesFileNames().Distinct().ToArray();
+                IList<Task<Assembly>> retrieveAssemblyTasks = new List<Task<Assembly>>();
+
+                foreach (string assemblyFileName in assemblyFileNames)
+                {
+                    retrieveAssemblyTasks.Add(this.LoadControllerAssemblyAsync(assemblyFileName));
+                }
+
+                Task.WaitAll(retrieveAssemblyTasks.ToArray());
+
+                IEnumerable<Assembly> result = retrieveAssemblyTasks
+                    .Select(v => v.Result)
+                    .Where(v => v != null);
+
+                return result;
             }
-
-            Task.WaitAll(retrieveAssemblyTasks.ToArray());
-
-            IEnumerable<Assembly> result = retrieveAssemblyTasks
-                .Select(v => v.Result)
-                .Where(v => v != null);
-
-            return result;
         }
 
+        #endregion
+
+
+        #region Internal
+        internal IEnumerable<Type> GetControllers()
+        {
+            using (new HealthMonitoring.MethodPerformanceRegion("ControllerContainerInitializer.GetControllers"))
+                return this.GetControllers(this.ControllerContainerAssemblies);
+        }
         #endregion
 
         #region Protected members
@@ -370,8 +379,6 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <param name="controllers">The controllers to be registered.</param>
         protected virtual void RegisterControllers(IEnumerable<Type> controllers)
         {
-            var controllerStore = new ControllerStore();
-            controllerStore.AddControllers(controllers.ToArray(), ConfigManager.GetManager());
             controllers.ToList().ForEach(c => ControllerContainerInitializer.RegisterStringResources(c));
         }
 

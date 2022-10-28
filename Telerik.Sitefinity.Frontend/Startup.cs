@@ -27,6 +27,8 @@ namespace Telerik.Sitefinity.Frontend
         /// </summary>
         public static void OnPreApplicationStart()
         {
+            ObjectFactory.RegisteringIoCTypes += ObjectFactory_RegisteringIoCTypes;
+
             Bootstrapper.Initialized -= Bootstrapper_Initialized;
             Bootstrapper.Initialized += Bootstrapper_Initialized;
 
@@ -39,6 +41,11 @@ namespace Telerik.Sitefinity.Frontend
         #endregion
 
         #region Private Methods
+
+        private static void ObjectFactory_RegisteringIoCTypes(object sender, EventArgs e)
+        {
+            ObjectFactory.Container.RegisterType<IControllerProvider, ControllerProvider>("Feather");
+        }
 
         private static void Bootstrapper_Initialized(object sender, Data.ExecutedEventArgs e)
         {

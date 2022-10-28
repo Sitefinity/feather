@@ -87,7 +87,7 @@ namespace Telerik.Sitefinity.Frontend
                 if (layoutsToolbox != null)
                 {
                     var htmlLayoutsSection = layoutsToolbox.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "HtmlLayouts");
-                    if (htmlLayoutsSection != null)
+                    if (htmlLayoutsSection != null && htmlLayoutsSection.Source == ConfigSource.Database)
                     {
                         layoutsToolbox.Sections.Remove(htmlLayoutsSection);
                         configManager.SaveSection(toolboxConfig);
@@ -147,12 +147,13 @@ namespace Telerik.Sitefinity.Frontend
                     var widgets = section.Tools.Where<ToolboxItem>(t => t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.", StringComparison.Ordinal) && !t.ControllerType.StartsWith("Telerik.Sitefinity.Frontend.DynamicContent", StringComparison.Ordinal)).ToArray();
                     foreach (ToolboxItem tool in widgets)
                     {
-                        section.Tools.Remove(tool);
+                        if (tool.Source == ConfigSource.Database)
+                            section.Tools.Remove(tool);
                     }
                 }
 
                 var mvcWidgetsSection = pageControls.Sections.FirstOrDefault<ToolboxSection>(s => s.Name == "MvcWidgets");
-                if (mvcWidgetsSection != null)
+                if (mvcWidgetsSection != null && mvcWidgetsSection.Source == ConfigSource.Database)
                 {
                     pageControls.Sections.Remove(mvcWidgetsSection);
                 }
@@ -293,7 +294,8 @@ namespace Telerik.Sitefinity.Frontend
                     var pageControls = toolboxesConfig.Toolboxes["PageLayouts"];
 
                     var sectionToDelete = pageControls.Sections.FirstOrDefault<ToolboxSection>(e => e.Name == sectionName);
-                    pageControls.Sections.Remove(sectionToDelete);
+                    if (sectionToDelete != null && sectionToDelete.Source == ConfigSource.Database)
+                        pageControls.Sections.Remove(sectionToDelete);
 
                     configurationManager.SaveSection(toolboxesConfig);
                 }

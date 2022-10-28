@@ -385,6 +385,37 @@
                     }
 
                     return null;
+                },
+                isDamEnabled: function () {
+                    var mediaTypeFullName = constants[mediaType].itemType;
+                    return serverContext.damSupportedMediaTypes().includes(mediaTypeFullName);
+                },
+                openAdminAppFilePicker: function (provider, culture, itemId, sender) {
+                    culture = culture || serverContext.getUICulture();
+                    var openFilePickerEvent = new CustomEvent("openFilePicker", {
+                        detail: {
+                            mediaType: mediaType,
+                            provider: provider,
+                            culture: culture,
+                            itemId: itemId,
+                            sender: sender
+                        }
+                    });
+
+                    if ($http.pendingRequests && $http.pendingRequests.length) {
+                        // we must wait for all pending requests to complete before opening the file picker otherwise page is being refreshed
+                        var intervalId = setInterval(function () {
+                            if (!$http.pendingRequests.length) {
+                                clearTimeout(intervalId);
+                                document.dispatchEvent(openFilePickerEvent);
+                            }
+                        }, 100);
+                    } else {
+                        // dispatch event with delay as otherwise angularjs refreshes the page
+                        setTimeout(function () {
+                            document.dispatchEvent(openFilePickerEvent);
+                        }, 100);
+                    }
                 }
             };
         };

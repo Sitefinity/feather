@@ -89,12 +89,12 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
                 var fileNameWithoutExtension = this.GetFileNameWithoutExtension(fileName);
                 var itemToDelete = section.Tools.FirstOrDefault<ToolboxItem>(e => e.Name == fileNameWithoutExtension);
 
-                if (itemToDelete != null)
+                if (itemToDelete != null && itemToDelete.Source == ConfigSource.Database)
                 {
                     section.Tools.Remove(itemToDelete);
                 }
 
-                if (!section.Tools.Any<ToolboxItem>())
+                if (!section.Tools.Any<ToolboxItem>() && section.Source == ConfigSource.Database)
                 {
                     pageControls.Sections.Remove(section);
                 }

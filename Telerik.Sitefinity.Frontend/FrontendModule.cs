@@ -10,8 +10,15 @@ using Ninject.Modules;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.Frontend;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Services;
+
+[assembly: SitefinityModule(FrontendModule.ModuleName,
+                            typeof(FrontendModule),
+                            "Feather",
+                            "Modern, intuitive, convention based, mobile-first UI for Progress Sitefinity CMS.",
+                            StartupType.OnApplicationStart)]
 
 namespace Telerik.Sitefinity.Frontend
 {

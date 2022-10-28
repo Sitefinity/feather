@@ -16,6 +16,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
 using Telerik.Sitefinity.Security.Model;
+using Telerik.Sitefinity.Security.Sanitizers;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI;
@@ -42,7 +43,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (controller == null)
                 throw new ArgumentNullException("controller");
             
-            if (contentViewDisplayMode == ContentViewDisplayMode.Detail && viewModel != null && viewModel.Items.Count() == 1)
+            if (contentViewDisplayMode == ContentViewDisplayMode.Detail && viewModel != null)
             {
                 return true;
             }
@@ -285,6 +286,26 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
 
             var attribute = controller.GetType().GetCustomAttributes(true).OfType<IndexRenderModeAttribute>().LastOrDefault();
             return attribute == null ? IndexRenderModes.Normal : attribute.Mode;
+        }
+
+        /// <summary>
+        /// Returns the invalid response for the details view.
+        /// </summary>
+        /// <returns>The <see cref="ActionResult"/></returns>
+        public static ActionResult HandleInvalidDetailsAction(this IController controller, string message)
+        {
+            if (SystemManager.IsDesignMode || SystemManager.IsPreviewMode)
+            {
+                var sanitizer = ObjectFactory.Resolve<IHtmlSanitizer>();
+                message = sanitizer.Sanitize(message);
+
+                var response = new ContentResult();
+                response.Content = message;
+
+                return response;
+            }
+
+            return new EmptyResult();
         }
 
         #endregion

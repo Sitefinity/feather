@@ -101,10 +101,16 @@
                         sender.remove_close(closeEditAllProperties);
                     };
 
-                    var forceAngularJsDigest = function () {
-                        scope.$digest();
+                    var forceScopeDigestAndApply = function (scopeToRefresh) {
+                        scopeToRefresh = scopeToRefresh || scope;
 
-                        document.removeEventListener("forceAngularJsDigest", forceAngularJsDigest);
+                        scopeToRefresh.$digest();
+                        scopeToRefresh.$apply();
+                    };
+
+                    var adminAppEditDialogClosed = function () {
+                        forceScopeDigestAndApply();
+                        document.removeEventListener("adminAppEditDialogClosed", adminAppEditDialogClosed);
                     };
 
                     var getCultureFromUrl = function () {
@@ -114,11 +120,43 @@
                         return culture;
                     };
 
+                    var filePickerClosed = function (e) {
+                        document.removeEventListener("filePickerClosed", filePickerClosed);
+
+                        if (scope.$$destroyed || !e.detail) {
+                            return;
+                        }
+
+                        if (e.detail.sender === scope) {
+                            // when handler is executed for the same scoppe we need to update values and refresh it
+                            if (e.detail.data) {
+                                scope.sfImage = {
+                                    Id: e.detail.data.Id
+                                };
+
+                                scope.sfProvider = e.detail.data.Provider;
+                            } else {
+                                if (scope.sfModel === undefined) {
+                                    scope.sfModel = null;
+                                    // triggers watch in designerview-simple.js which closes the dialog when sfModel is null
+                                    forceScopeDigestAndApply(scope.$parent);
+                                }
+                            }
+
+                            forceScopeDigestAndApply();
+                        } else {
+                            // in some (mistery) when upload file field gets reinitialized and the scope is not the same object
+                            if (e.detail.data) {
+                                scope.sfProvider = e.detail.data.Provider;
+                                getImage(e.detail.data.Id);
+                            }
+                        }
+                    };
+
                     scope.editAllProperties = function () {
                         var parentId = scope.sfImage.ParentId || scope.sfImage.Album.Id;
 
                         var isAdminAppActive = window.location.pathname.toLowerCase().includes("adminapp");
-
                         if (isAdminAppActive) {
                             var irisEvent = new CustomEvent("openIrisContent", {
                                 detail: {
@@ -129,9 +167,9 @@
                                     culture: serverContext.getUICulture() || getCultureFromUrl()
                                 }
                             });
-                            document.dispatchEvent(irisEvent);
 
-                            document.addEventListener("forceAngularJsDigest", forceAngularJsDigest);
+                            document.dispatchEvent(irisEvent);
+                            document.addEventListener("adminAppEditDialogClosed", adminAppEditDialogClosed);
                         } else {
                             var fullEditAllPropertiesUrl = editAllPropertiesUrl + ('&parentId=' + parentId);
 
@@ -143,7 +181,7 @@
                             var dialogContext = getDialogContext(editDialog, parentId);
 
                             dialogManager.openDialog(dialogName, null, dialogContext);
-                        }                       
+                        }
                     };
 
                     scope.done = function () {
@@ -179,20 +217,34 @@
                             provider: scope.sfProvider
                         };
 
-                        if (scope.sfImage && scope.sfImage.Id) {
-                            scope.model.selectedItems.push(scope.sfImage);
-                            scope.model.filterObject = sfMediaFilter.newFilter();
-                            scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
-                            scope.model.filterObject.status = attrs.sfMaster === 'true' || attrs.sfMaster === 'True' ? 'master' : 'live';
+                        if (isDamEnabled) {
+                            var itemId = scope.sfImage ? scope.sfImage.OriginalContentId : null;
+                            sfMediaService.images.openAdminAppFilePicker(scope.sfProvider, getCultureFromUrl(), itemId, scope);
+                        } else {
+                            if (scope.sfImage && scope.sfImage.Id) {
+                                scope.model.selectedItems.push(scope.sfImage);
+                                scope.model.filterObject = sfMediaFilter.newFilter();
+                                scope.model.filterObject.set.parent.to(scope.sfImage.FolderId || scope.sfImage.Album.Id);
+                                scope.model.filterObject.status = attrs.sfMaster === 'true' || attrs.sfMaster === 'True' ? 'master' : 'live';
+                            }
+
+                            var imageSelectorModalScope = element.find('.imageSelectorModal').scope();
+
+                            if (imageSelectorModalScope)
+                                imageSelectorModalScope.$openModalDialog();
                         }
-
-                        var imageSelectorModalScope = element.find('.imageSelectorModal').scope();
-
-                        if (imageSelectorModalScope)
-                            imageSelectorModalScope.$openModalDialog();
                     };
 
                     // Initialize
+                    var isDamEnabled = sfMediaService.images.isDamEnabled();
+                    if (isDamEnabled) {
+                        element.on('$destroy', function () {
+                            document.removeEventListener('filePickerClosed', filePickerClosed);
+                        });
+
+                        document.addEventListener('filePickerClosed', filePickerClosed);
+                    }
+
                     if (scope.sfModel && scope.sfModel !== guidEmpty) {
                         getImage(scope.sfModel);
                     }
@@ -212,7 +264,15 @@
                     });
 
                     scope.$watch('sfImage.Id', function (newVal) {
-                        scope.sfModel = newVal;
+                        // Do not set sfModel to undefined when switching between Simple and Advanced view - BUG #481047
+                        if (newVal !== undefined) {
+                            scope.sfModel = newVal;
+                        }
+
+                        // We want to set sfModel to undefined when clear already selected image (sfImage is set to null in 'clearImage')
+                        if (newVal === undefined && scope.sfImage === null) {
+                            scope.sfModel = undefined;
+                        }
                     });
                 }
             };
