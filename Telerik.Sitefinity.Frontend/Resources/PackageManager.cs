@@ -6,7 +6,7 @@ using System.Web.Hosting;
 using System.Web.Routing;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
-using Telerik.Sitefinity.HealthMonitoring;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
@@ -35,7 +35,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
 
             if (context.Request.Path.Contains("/Sitefinity/Versioning"))
             {
-                // If we are in the versioning try get tha package from page info
+                // If we are in the versioning try get the package from page info
                 if (SystemManager.CurrentHttpContext.Items.Contains(PackageManager.CurrentVersionTemplateId))
                 {
                     var templateId = SystemManager.CurrentHttpContext.Items[PackageManager.CurrentVersionTemplateId] as string;
@@ -188,19 +188,15 @@ namespace Telerik.Sitefinity.Frontend.Resources
             var currentTemplate = template;
             while (currentTemplate != null)
             {
-                var name = currentTemplate.Name ?? (currentTemplate.Title != null ? currentTemplate.Title.ToString() : null);
-                if (!name.IsNullOrEmpty())
+                var names = new string[] { currentTemplate.LayoutPath, currentTemplate.Name, currentTemplate.Title.ToString() };
+
+                foreach (var name in names)
                 {
-                    var parts = name.Split('.');
-                    if (parts.Length > 1)
+                    var expectedPackageName = this.ExtractPackageName(name);
+                    if (!expectedPackageName.IsNullOrWhitespace())
                     {
-                        var expectedPackageName = this.StripInvalidCharacters(parts[0]);
-                        var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
-                        if (path != null && Directory.Exists(path))
-                        {
-                            SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
-                            return expectedPackageName;
-                        }
+                        SystemManager.CurrentHttpContext.Items[PackageManager.CurrentPackageKey] = expectedPackageName;
+                        return expectedPackageName;
                     }
                 }
 
@@ -280,7 +276,7 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var templateId = PackageManager.GetEditedContainerKey(context);
                 packageName = this.GetPackageFromTemplateId(templateId);
             }
-            else if (context.Request.Path.Contains("/Sitefinity/SFNwslttrs"))
+            else if (NewslettersHelper.IsNewsletter())
             {
                 var pageNodeId = PackageManager.GetEditedContainerKey(context);
                 packageName = this.GetPackageFromNodeId(pageNodeId);
@@ -341,6 +337,25 @@ namespace Telerik.Sitefinity.Frontend.Resources
             return packageName;
         }
 
+        private string ExtractPackageName(string name)
+        {
+            if (!name.IsNullOrWhitespace())
+            {
+                var parts = name.Split('.');
+                if (parts.Length > 1)
+                {
+                    var expectedPackageName = this.StripInvalidCharacters(parts[0]);
+                    var path = HostingEnvironment.MapPath(this.GetPackageVirtualPath(expectedPackageName));
+                    if (path != null && Directory.Exists(path))
+                    {
+                        return expectedPackageName;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         #endregion
 
         [Serializable]
@@ -370,7 +385,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 return packageManager.PackageExists(paramValue);
             }
         }
-
 
         #region Constants
 

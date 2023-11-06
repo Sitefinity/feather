@@ -105,9 +105,9 @@ module.exports = function(grunt) {
 
             var searchAgain = true;
             var fontFaceSelector = '@font-face';
-            var openBraket = '{';
+            //var openBraket = '{';
             var closeBraket = '}';
-            var nestedSelector = ':root:root:root:root:root .sf-backend-wrp'
+            var nestedSelector = ':root:root:root:root:root .sf-backend-wrp {'
 
             var fontFaceIndex = str.indexOf(fontFaceSelector, startingIndex);
 
@@ -116,13 +116,8 @@ module.exports = function(grunt) {
                 var innerRules = str.substring(fontFaceIndex, closeBraketIndex + 1);
 
                 if (innerRules.indexOf(nestedSelector) > -1) {
-                    var nestedSelectorIndex = str.indexOf(nestedSelector, fontFaceIndex);
-                    var startSelector = str.substring(nestedSelectorIndex, str.indexOf(openBraket, nestedSelectorIndex) + 1);
-
-                    // Remove the unnecessary selectors 
-                    var end = str.indexOf(closeBraket, nestedSelectorIndex);
-                    str = str.slice(0, end) + str.slice(end + 1);
-                    str = str.replace(startSelector, '');
+                    var newInnerRule = innerRules.replace(nestedSelector, "").replace(closeBraket, "");
+                    str = str.replace(innerRules, newInnerRule);
                 }
 
                 startingIndex = str.indexOf(closeBraket, fontFaceIndex);

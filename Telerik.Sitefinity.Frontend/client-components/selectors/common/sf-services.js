@@ -14,7 +14,20 @@
         //getHeaders['If-Modified-Since'] = 'Thu, 01 Feb 1900 00:00:00';
         getHeaders['Cache-Control'] = 'no-cache';
         getHeaders.Pragma = 'no-cache';
+
+        $httpProvider.interceptors.push('httpRequestInterceptor');
     }]);
+
+    module.factory('httpRequestInterceptor', function () {
+        return {
+            request: function (config) {
+
+                config.headers['X-Requested-With'] = 'XMLHttpRequest';
+
+                return config;
+            }
+        };
+    });
 
     module.factory('serviceHelper', ['$resource', 'serverContext', function ($resource, serverContext) {
         /* Private methods and variables */

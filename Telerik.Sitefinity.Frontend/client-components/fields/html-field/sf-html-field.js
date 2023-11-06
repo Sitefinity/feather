@@ -64,9 +64,9 @@
                                 toolbar.find('.show-all-button').parents('li').hide();
                             }
                             if (scope.showAllCommands) {
-                                toolbar.find('.show-all-button').addClass('k-state-active');
+                                toolbar.find('.show-all-button').addClass('k-selected');
                             } else {
-                                toolbar.find('.show-all-button').removeClass('k-state-active');
+                                toolbar.find('.show-all-button').removeClass('k-selected');
                             }
                             scope.showAllCommands = !scope.showAllCommands;
                         };

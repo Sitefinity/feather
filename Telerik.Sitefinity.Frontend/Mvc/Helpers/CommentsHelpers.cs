@@ -34,6 +34,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             var contentItem = item as Content;
             bool? allowComments = contentItem != null ? contentItem.AllowComments : null;
+
+            if (NewslettersHelper.IsNewsletter())
+            {
+                allowComments = false;
+            }
+
             var threadKey = ControlUtilities.GetLocalizedKey(item.Id, null, CommentsBehaviorUtilities.GetLocalizedKeySuffix(item.GetType().FullName));
             var itemTypeFullName = item.GetType().FullName;
 
@@ -203,6 +209,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 {
                     allowComments = contentItem.AllowComments;
                 }
+            }
+
+            if (NewslettersHelper.IsNewsletter())
+            {
+                allowComments = false;
             }
 
             return allowComments;

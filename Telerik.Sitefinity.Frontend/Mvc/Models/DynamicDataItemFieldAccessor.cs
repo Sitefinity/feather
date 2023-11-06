@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.Dynamic;
-using System.Linq;
-using System.Text;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Descriptors;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules;
-using Telerik.Sitefinity.RelatedData;
+using Telerik.Sitefinity.Modules.GenericContent;
+using Telerik.Sitefinity.Utilities.HtmlParsing;
+using Telerik.Sitefinity.Web.UI.Fields.Model;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -61,10 +61,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 {
                     var value = propInfo.GetValue(this.item.DataItem);
                     var fieldType = propInfo.GetFieldType();
-                    if (fieldType != null && fieldType == UserFriendlyDataType.LongText)
+                    if (fieldType != null)
                     {
-                        var stringValue = this.GetAppropriateStringValue(value);
-                        return HtmlFilterProvider.ApplyFilters(stringValue);
+                        if(fieldType == UserFriendlyDataType.LongText)
+                        {
+                            var stringValue = this.GetAppropriateStringValue(value);
+                            return HtmlFilterProvider.ApplyFilters(stringValue);
+                        }
+                        else if(fieldType == UserFriendlyDataType.Link)
+                        {
+                            var stringValue = this.GetAppropriateStringValue(value);
+                            return this.ResolveLinkFieldLinks(stringValue);
+                        }
                     }
 
                     return value;
@@ -96,6 +104,31 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             }
 
             return value as string;
+        }
+
+        private string ResolveLinkFieldLinks(string stringValue)
+        {
+            var json = JsonConvert.DeserializeObject<LinkItemModel[]>(stringValue);
+            foreach (var linkModel in json)
+            {
+                if (!string.IsNullOrEmpty(linkModel.Sfref))
+                {
+                    string hrefAnchor = $"<a href=\"{linkModel.Sfref}\"></a>";
+                    string resolved = new DynamicLinksParser().Apply(hrefAnchor);
+
+                    using (HtmlParser parser = new HtmlParser(resolved))
+                    {
+                        parser.SetChunkHashMode(false);
+                        parser.AutoExtractBetweenTagsOnly = false;
+                        parser.KeepRawHTML = true;
+                        var chunk = parser.ParseNext();
+                        linkModel.Href = chunk.GetParamValue("href");
+                        linkModel.Sfref = chunk.GetParamValue("sfref");
+                    }
+                }
+            }
+
+            return JsonConvert.SerializeObject(json);
         }
 
         private ItemViewModel item;
