@@ -196,9 +196,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyInfoShare\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="ControllerProvider.cs" />
     <Compile Include="FrontendModuleFilter.cs" />
     <Compile Include="FrontendModuleUpgrader.cs" />
