@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Linq;
-using System.Threading;
 using System.Web;
-using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
-using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
-using Telerik.Sitefinity.Localization.UrlLocalizationStrategies;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Libraries;
 using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Multisite;
 using Telerik.Sitefinity.Pages.Model;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.DataResolving;
@@ -166,6 +163,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
                 if (node != null)
                 {
                     return UrlPath.ResolveUrl(node.Url, true);
+                }
+                else
+                {
+                    // try to redirect to a page from a different site
+                    var redirectPageNode = PageManager.GetManager().GetPageNode(pageId);
+                    if (SystemManager.CurrentContext.CurrentSite.SiteMapRootNodeId != redirectPageNode.RootNodeId)
+                    {
+                        using (SiteRegion.FromSiteMapRoot(redirectPageNode.RootNodeId, SiteContextResolutionTypes.ByParam))
+                        {
+                            if (sitefinitySiteMap != null)
+                            {
+                                node = sitefinitySiteMap.FindSiteMapNodeFromKey(pageId.ToString(), false);
+                            }
+                            else
+                            {
+                                node = siteMap.FindSiteMapNodeFromKey(pageId.ToString());
+                            }
+
+                            if (node != null)
+                            {
+                                return UrlPath.ResolveUrl(node.Url, true);
+                            }
+                        }
+                    }
                 }
             }
 

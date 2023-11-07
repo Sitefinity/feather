@@ -44,6 +44,10 @@
 
             var levelFilter = function (property) {
                 var level = property.PropertyPath.split('/').length - 2;
+                if (currentLevel == 1 && property.PropertyName == 'FieldName' && property.PropertyPath.indexOf("MetaField") > -1) {
+                    return true;
+                }
+
                 if (!propertyName || propertyName == 'Home') {
                     return level <= currentLevel;
                 } else {

@@ -58,6 +58,7 @@
                         config.headers.SF_UI_CULTURE = serverData.get('culture');
                     }
 
+                    config.headers['X-Requested-With'] = 'XMLHttpRequest';
                     return config;
                 },
                 'responseError': function (rejection) {

@@ -6,7 +6,13 @@
 	// Expand/collapse icon
 .k-treeview.k-treeview--list-group
 	font-family: open_sansregular, Arial, Verdana, sans-serif;
-	
+
+	.k-treeview-top,
+	.k-treeview-mid,
+	.k-treeview-bot
+		&:has(> .k-treeview-toggle)
+			margin-left: 16px
+
 	.k-icon
 		margin: 0
 		left: 0

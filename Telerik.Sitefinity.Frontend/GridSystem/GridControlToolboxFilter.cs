@@ -1,6 +1,11 @@
 ﻿using System;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.DesignerToolbox;
-using Telerik.Sitefinity.Modules.Pages;
+using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+using Telerik.Sitefinity.Modules.Newsletters;
+using Telerik.Sitefinity.Modules.Newsletters.Configuration;
+using Telerik.Sitefinity.Modules.Newsletters.Web;
+using Telerik.Sitefinity.Newsletters.Model;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.TypeConverters;
@@ -31,7 +36,7 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
         public bool IsSectionVisible(IToolboxSection section, IToolboxFilterContext context)
         {
             if (section != null && context != null && section.Name == GridWidgetRegistrator.GridSectionName && section.Title == GridWidgetRegistrator.GridSectionTitle)
-                return SystemManager.GetModule("Feather") != null && !(context.ContainerId == "LayoutToolboxContainer" && (context.MediaType == DesignMediaType.NewsletterCampaign || context.MediaType == DesignMediaType.NewsletterTemplate));
+                return SystemManager.GetModule("Feather") != null && context.ContainerId == "LayoutToolboxContainer";
 
             return true;
         }
@@ -48,9 +53,21 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
 
             var currentFramework = this.frameworkExtractor();
 
-            // Everything works for Hybrid mode. No need to reflect on the specific item.
+            // Pages: Everything works for Hybrid mode. No need to reflect on the specific item.
+            // Newsletters: Always run in Hybrid mode. Message body type needs check.
             if (currentFramework == PageTemplateFramework.Hybrid)
-                return true;
+            {
+                var currentHttpContext = SystemManager.CurrentHttpContext;
+
+                if (NewslettersHelper.IsMvcNewsletter())
+                {
+                    currentFramework = PageTemplateFramework.Mvc;
+                }
+                else
+                {
+                    return true;
+                }
+            }
 
             if (!tool.ControlType.IsNullOrEmpty())
             {
@@ -71,6 +88,28 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             return true;
         }
 
+        private bool IsNewslettersModuleEnabled
+        {
+            get
+            {
+                if (this.isNewslettersModuleEnabled == null)
+                {
+                    try
+                    {
+                        Config.Get<NewslettersConfig>();
+                        this.isNewslettersModuleEnabled = true;
+                    }
+                    catch (Exception)
+                    {
+                        this.isNewslettersModuleEnabled = false;
+                    }
+                }
+
+                return this.isNewslettersModuleEnabled.Value;
+            }
+        }
+
+        private bool? isNewslettersModuleEnabled;
         private readonly Func<PageTemplateFramework> frameworkExtractor;
     }
 }

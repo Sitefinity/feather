@@ -1,4 +1,5 @@
-﻿using Telerik.Sitefinity.Abstractions;
+﻿using System;
+using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Pages.Model;
@@ -28,7 +29,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Layouts
             var strictTemplate = template as PageTemplate;
             if (strictTemplate != null && strictTemplate.Name != null)
             {
-                templateName = strictTemplate.Name;
+                templateName = !strictTemplate.LayoutPath.IsNullOrWhitespace() ? strictTemplate.LayoutPath : strictTemplate.Name;
             }
             else
             {
