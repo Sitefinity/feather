@@ -272,6 +272,22 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// phrase: Alternative text is required
+        /// </summary>
+        /// <value>Alternative text is required</value>
+        [ResourceEntry("AltTextRequired",
+            Value = "Alternative text is required",
+            Description = "phrase: Alternative text is required",
+            LastModified = "2023/04/19")]
+        public string AltTextRequired
+        {
+            get
+            {
+                return this["AltTextRequired"];
+            }
+        }
+
+        /// <summary>
         /// phrase: CSS classes
         /// </summary>
         /// <value>CSS classes</value>

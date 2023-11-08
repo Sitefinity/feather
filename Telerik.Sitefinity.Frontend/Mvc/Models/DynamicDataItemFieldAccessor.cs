@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Dynamic;
+using System.Linq;
+using Newtonsoft.Json;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Descriptors;
 using Telerik.Sitefinity.Model;
@@ -108,10 +109,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
         private string ResolveLinkFieldLinks(string stringValue)
         {
+            var linkFields = string.Empty;
+
             var json = JsonConvert.DeserializeObject<LinkItemModel[]>(stringValue);
-            foreach (var linkModel in json)
+            if (json != null)
             {
-                if (!string.IsNullOrEmpty(linkModel.Sfref))
+                foreach (var linkModel in json.Where(lm => !string.IsNullOrEmpty(lm.Sfref)))
                 {
                     string hrefAnchor = $"<a href=\"{linkModel.Sfref}\"></a>";
                     string resolved = new DynamicLinksParser().Apply(hrefAnchor);
@@ -121,16 +124,20 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         parser.SetChunkHashMode(false);
                         parser.AutoExtractBetweenTagsOnly = false;
                         parser.KeepRawHTML = true;
+
                         var chunk = parser.ParseNext();
+
                         linkModel.Href = chunk.GetParamValue("href");
                         linkModel.Sfref = chunk.GetParamValue("sfref");
                     }
                 }
+
+                linkFields = JsonConvert.SerializeObject(json);
             }
 
-            return JsonConvert.SerializeObject(json);
+            return linkFields;
         }
 
-        private ItemViewModel item;
+        private readonly ItemViewModel item;
     }
 }

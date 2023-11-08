@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="sf-Media--info-image m-left-md">
+    <div class="sf-Media--info-image m-left-md" ng-class="{ 'col-sm': sfModel }">
       <div style="position: relative" ng-show="sfImageIsVisible" ng-mouseover="showClearBtn=true" ng-mouseout="showClearBtn=false" class="sf-Media--img-wrapper">
         <img ng-src="{{sfImage.ThumbnailUrl}}" src="" alt="{{sfImage.Title.Value}}" />
         <div ng-show="showClearBtn" class="sf-Media-remove-button glyphicon glyphicon-remove" tabindex="0" title="Remove images" ng-click="clearImage()"></div>

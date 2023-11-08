@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <!-- Telerik Data Access related variables -->
+  <PropertyGroup>
+    <Use64BitEnhancer>true</Use64BitEnhancer>
+    <EnhancerVerboseMode>3</EnhancerVerboseMode>
+  </PropertyGroup>
+</Project>

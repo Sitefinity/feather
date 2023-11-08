@@ -413,8 +413,9 @@
 
                         var fileModelResolver = function () { return scope.model; };
                         var providerResolver = function () { return scope.provider; };
+                        var settingsResolver = function () { return scope.sfMediaSettings; };
 
-                        angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: fileModelResolver, sfProvider: providerResolver })
+                        angular.element('.uploadPropertiesModal').scope().$openModalDialog({ sfFileModel: fileModelResolver, sfProvider: providerResolver, sfMediaSettings: settingsResolver })
                             .then(function (uploadedImageInfo) {
                                 if (uploadedImageInfo && !uploadedImageInfo.ErrorMessage) {
                                     scope.$emit('sf-image-selector-image-uploaded', uploadedImageInfo);
@@ -775,9 +776,10 @@
         * Upload properties controller
         */
 
-        .controller('SfImageSelectorUploadPropertiesCtrl', ['$scope', '$uibModalInstance', 'sfMediaService', 'sfFileModel', 'sfProvider', function myfunction($scope, $uibModalInstance, sfMediaService, sfFileModel, sfProvider) {
+        .controller('SfImageSelectorUploadPropertiesCtrl', ['$scope', '$uibModalInstance', 'sfMediaService', 'sfFileModel', 'sfProvider', 'sfMediaSettings', function myfunction($scope, $uibModalInstance, sfMediaService, sfFileModel, sfProvider, sfMediaSettings) {
             $scope.model = sfFileModel;
             $scope.provider = sfProvider;
+            $scope.altTextRequired = sfMediaSettings.AltTextRequired;
 
             $scope.model.file.textSize = Math.ceil($scope.model.file.size / 1024) + " KB";
 
