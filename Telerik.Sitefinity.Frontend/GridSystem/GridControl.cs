@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -10,6 +10,7 @@ using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.StringResources;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Modules.Newsletters;
+using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.HtmlParsing;
 using Telerik.Sitefinity.Utilities.TypeConverters;
@@ -127,12 +128,10 @@ namespace Telerik.Sitefinity.Frontend.GridSystem
             }
 
             // Add sf_cols wrapper for back end pages and email campaigns.
-            var currentNode = SiteMapBase.GetActualCurrentNode();
-            var rootNode = currentNode != null ? currentNode.RootNode as PageSiteNode : null;
-            var ensureSfColsWrapper = (this.IsBackend() && !SystemManager.IsPreviewMode) 
-                                    || rootNode == null 
-                                    || rootNode.Id == NewslettersModule.standardCampaignRootNodeId 
-                                    || System.Web.HttpContext.Current.Items[SiteMapBase.CurrentNodeKey] == null;
+            var ensureSfColsWrapper = (this.IsBackend() && !SystemManager.IsPreviewMode)
+                                      || SiteMapBase.GetActualCurrentNode()?.RootNodeId == NewslettersModule.standardCampaignRootNodeId
+                                      || System.Web.HttpContext.Current.Items[SiteMapBase.CurrentNodeKey] == null;
+
             layout = this.ProcessLayoutString(layout, ensureSfColsWrapper);
 
             return ControlUtilities.GetTemplate(null, layout.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture), null, layout);

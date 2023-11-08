@@ -56,6 +56,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
                     {
                         this.SendStaticResource(context, fileStream, fileName);
                     }
+                    
+                    context.Response.Cache.VaryByParams.SetParams(new string[] { "v" });
                 }
                 else
                 {
@@ -63,6 +65,8 @@ namespace Telerik.Sitefinity.Frontend.Resources
                     {
                         this.SendParsedTemplate(context);
                     }
+
+                    context.Response.Cache.VaryByHeaders.SetHeaders(new string[] { "SF_UI_CULTURE" });
                 }
             }
             else
@@ -173,7 +177,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
         /// <param name="fileName">Name of the file.</param>
         protected virtual void SetResponseClientCache(HttpContext context, string fileName)
         {
-#if !DEBUG
             if (fileName.EndsWith(".css", StringComparison.OrdinalIgnoreCase) ||
                 fileName.EndsWith(".js", StringComparison.OrdinalIgnoreCase) ||
                 fileName.EndsWith(".html", StringComparison.OrdinalIgnoreCase) ||
@@ -187,7 +190,6 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var lastWriteTime = ResourceHttpHandler.GetAssemblyLastWriteTime();
                 cache.SetLastModified(lastWriteTime);
             }
-#endif
         }
 
         /// <summary>

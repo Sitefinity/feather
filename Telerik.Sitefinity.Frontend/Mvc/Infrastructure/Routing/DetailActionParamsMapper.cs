@@ -5,11 +5,14 @@ using System.Web.Routing;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.ContentLocations;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.GenericContent.Model;
 using Telerik.Sitefinity.Lifecycle;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.GenericContent;
+using Telerik.Sitefinity.Publishing;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
@@ -101,41 +104,210 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             return false;
         }
 
+        /// <summary>
+        /// Determines whether an item should be displayed depending if the item or it`s parent is selected or the the item does not have any filtration
+        /// </summary>
+        /// <param name="item">Data item</param>
+        /// <returns>Return true if the item is selected, has a selected parent or does not have any filtration, else return false</returns>
         private bool CanDisplayItem(IDataItem item)
         {
-            bool isParentSelected = true;
+            bool canDispay = true;
+
             var modelProperty = this.Controller.GetType().GetProperty("Model");
             if (modelProperty != null)
             {
                 var model = modelProperty.GetValue(this.Controller);
-                if (item is IHasParent)
+                if (model != null)
                 {
-                    var serializedSelectedParentsIdsProperty = model.GetType().GetProperty("SerializedSelectedParentsIds");
-                    if (serializedSelectedParentsIdsProperty != null)
+                    if (this.IsPreviewRequested())
+                        item = this.TryGetLiveItem(item);
+                    
+                    string serializedSelectedItemsIds = this.GetSelectedItemsIds(model);
+                    if (serializedSelectedItemsIds != null)
                     {
-                        var serializedSelectedParentsIds = serializedSelectedParentsIdsProperty.GetValue(model);
-                        if (serializedSelectedParentsIds != null)
+                        canDispay = this.IsSelectedItem(item, model, serializedSelectedItemsIds);
+                    }
+                    else
+                    {
+                        if (this.IsParentFilterModeSelected(model))
                         {
-                            isParentSelected = serializedSelectedParentsIds.ToString().Contains((item as IHasParent).Parent.Id.ToString());
-
-                            if (!isParentSelected)
+                            string serializedSelectedParentsItemsIds = this.GetSelectedParentsIds(model);
+                            if (serializedSelectedParentsItemsIds != null)
                             {
-                                var folderIdProperty = item.GetType().GetProperty("FolderId");
-                                if (folderIdProperty != null)
-                                {
-                                    var folderId = folderIdProperty.GetValue(item);
-                                    if (folderId != null)
-                                    {
-                                        isParentSelected = serializedSelectedParentsIds.ToString().Contains(folderId.ToString());
-                                    }
-                                }
+                                canDispay = this.HasSelectedParentItem(item, model, serializedSelectedParentsItemsIds);
                             }
                         }
                     }
                 }
             }
 
-            return isParentSelected;
+            return canDispay;
+        }
+
+        /// <summary>
+        /// Checks to see if the item given is the master one. If true returns the live item.
+        /// </summary>
+        /// <param name="item">Data item</param>
+        /// <returns></returns>
+        private IDataItem TryGetLiveItem(IDataItem item)
+        {
+            if (item is ILifecycleDataItem itemAsLifecycle)
+            {
+                if (itemAsLifecycle.Status == ContentLifecycleStatus.Master)
+                {
+                    var manager = ManagerBase.GetMappedManager(item.GetType(), item.Provider.ToString());
+                    var lifecycleManager = manager as ILifecycleManager;
+
+                    var liveItem = lifecycleManager.Lifecycle.GetLive(itemAsLifecycle);
+                    if (liveItem != null)
+                    {
+                        return liveItem;
+                    }
+                }
+            }
+
+            return item;
+        }
+
+        private bool IsPreviewRequested()
+        {
+            var actionParam = SystemManager.CurrentHttpContext.Request.ParamsGet("sf-content-action");
+            bool isPreview = actionParam != null && actionParam == "preview";
+
+            return isPreview;
+        }
+
+        /// <summary>
+        /// Determines whether the item is selected
+        /// </summary>
+        /// <param name="item">Data item</param>
+        /// <param name="model">The widget model</param>
+        /// <returns>Return false if item is not in the selected items, else return true</returns>
+        private bool IsSelectedItem(IDataItem item, object model, string serializedSelectedItemsIds)
+        {
+            bool isSelectedItem = true;
+
+            var selectionModeProperty = model.GetType().GetProperty("SelectionMode");
+            if (selectionModeProperty != null)
+            {
+                var selectionMode = selectionModeProperty.GetValue(model);
+                if (selectionMode != null)
+                {
+                    if (selectionMode.ToString() == SelectionMode.SelectedItems.ToString())
+                    {
+                        isSelectedItem = serializedSelectedItemsIds.Contains(item.Id.ToString());
+                        if (!isSelectedItem && item is ILifecycleDataItemGeneric itemAsLifecycleGeneric)
+                        {
+                            isSelectedItem = serializedSelectedItemsIds.Contains(itemAsLifecycleGeneric.OriginalContentId.ToString());
+                        }
+                    }
+                    // This is a special case for the list item as it`s parent id is stored in the selected items property
+                    else if (item is IHasParent)
+                    {
+                        isSelectedItem = serializedSelectedItemsIds.Contains((item as IHasParent).Parent.Id.ToString());
+                    }
+                }
+            }
+
+            return isSelectedItem;
+        }
+
+        /// <summary>
+        /// Determines whether ParentFilterMode property is set to Selected
+        /// </summary>
+        /// <param name="model">The widget model</param>
+        /// <returns>Return true if the ParentFilterMode is set to Selected, else return false</returns>
+        private bool IsParentFilterModeSelected(object model)
+        {
+            var parentFilterModeProperty = model.GetType().GetProperty("ParentFilterMode");
+            if (parentFilterModeProperty != null)
+            {
+                var parentFilterMode = parentFilterModeProperty.GetValue(model);
+                if (parentFilterMode != null && parentFilterMode.ToString() == "Selected")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the selected items ids
+        /// </summary>
+        /// <param name="model">The widget model</param>
+        /// <returns>The selected items ids as a string</returns>
+        private string GetSelectedItemsIds(object model)
+        {
+            var serializedSelectedItemsIdsProperty = model.GetType().GetProperty("SerializedSelectedItemsIds");
+
+            if (serializedSelectedItemsIdsProperty != null)
+            {
+                var serializedSelectedItemsIds = serializedSelectedItemsIdsProperty.GetValue(model);
+                if (serializedSelectedItemsIds != null && serializedSelectedItemsIds.ToString() != "[]")
+                {
+                    return serializedSelectedItemsIds.ToString();
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Determines whether the item has a selected parent
+        /// </summary>
+        /// <param name="item">Data item</param>
+        /// <param name="model">The widget model</param>
+        /// <param name="serializedSelectedParentsIds">The selected parets ids</param>
+        /// <returns>Return false if the item`s parent is not selected, else return true</returns>
+        private bool HasSelectedParentItem(IDataItem item, object model, string serializedSelectedParentsIds)
+        {
+            bool hasSelectedParentItem = true;
+
+            // The parent id is retrieved differently depending if it implement IHasParent or is Dynamic content
+            if (item is IHasParent)
+            {
+                hasSelectedParentItem = serializedSelectedParentsIds.ToString().Contains((item as IHasParent).Parent.Id.ToString());
+                if (!hasSelectedParentItem)
+                {
+                    // If the item is saved in a folder, e.g. document, images, videos, the id of the folder corresponds with the parent id
+                    var folderIdProperty = item.GetType().GetProperty("FolderId");
+                    if (folderIdProperty != null)
+                    {
+                        var folderId = folderIdProperty.GetValue(item);
+                        if (folderId != null)
+                        {
+                            hasSelectedParentItem = serializedSelectedParentsIds.ToString().Contains(folderId.ToString());
+                        }
+                    }
+                }
+            }
+            else if (item is DynamicContent)
+            {
+                hasSelectedParentItem = serializedSelectedParentsIds.ToString().Contains((item as DynamicContent).SystemParentId.ToString());
+            }
+
+            return hasSelectedParentItem;
+        }
+
+        /// <summary>
+        /// Gets the selected parents ids
+        /// </summary>
+        /// <param name="model">The widget model</param>
+        /// <returns>The selected parents ids as a string</returns>
+        private string GetSelectedParentsIds(object model)
+        {
+            var serializedSelectedParentsIdsProperty = model.GetType().GetProperty("SerializedSelectedParentsIds");
+
+            if (serializedSelectedParentsIdsProperty != null)
+            {
+                var serializedSelectedParentsIds = serializedSelectedParentsIdsProperty.GetValue(model);
+                if (serializedSelectedParentsIds != null && serializedSelectedParentsIds.ToString() != "[]")
+                {
+                    return serializedSelectedParentsIds.ToString();
+                }
+            }
+
+            return null;
         }
 
         /// <inheritdoc />

@@ -1,8 +1,12 @@
 ﻿using System.Linq;
 using System.Web.Script.Serialization;
 using Telerik.Sitefinity.Configuration;
+using Telerik.Sitefinity.Libraries.Model;
 using Telerik.Sitefinity.Modules.Libraries.Configuration;
-using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Modules.Libraries.Images;
+using Telerik.Sitefinity.Web.UI.ContentUI.Views.Backend.Detail.Definitions;
+using Telerik.Sitefinity.Web.UI.Fields.Config;
+using Telerik.Sitefinity.Web.UI.Fields.Definitions;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 {
@@ -23,11 +27,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             switch (mediaType)
             {
                 case "Image":
+                    var singleImageUploadDefinition = libratiesConfig.ContentViewControls[ImagesDefinitions.BackendImagesDefinitionName]?.Views[ImagesDefinitions.SingleImageUploadDetailsView] as DetailFormViewDefinition;
+                    var altTextRequired = (singleImageUploadDefinition?.Sections.First(s => s.Name == "MainSection")?.Fields.First(f => f.FieldName == nameof(Image.AlternativeText)) as TextFieldDefinition)?.Validation?.Required.GetValueOrDefault();
+
                     settings = new
                     {
                         AllowedExensionsSettings = libratiesConfig.Images.AllowedExensionsSettings,
                         EnableAllLanguagesSearch = libratiesConfig.EnableAllLanguagesSearch,
-                        EnableSelectedFolderSearch = libratiesConfig.EnableSelectedFolderSearch
+                        EnableSelectedFolderSearch = libratiesConfig.EnableSelectedFolderSearch,
+                        AltTextRequired = altTextRequired
                     };
                     break;
                 case "Video":
