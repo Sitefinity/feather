@@ -51343,6 +51343,13 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   top: -127px;
 }
 
+:root:root:root:root:root .sf-backend-wrp.sf-designer-dlg .k-tabstrip-content.k-focus,
+:root:root:root:root:root .sf-backend-wrp.sf-designer-dlg .k-tabstrip-content:focus,
+:root:root:root:root:root .sf-backend-wrp.sf-designer-dlg .k-tabstrip > .k-content.k-focus,
+:root:root:root:root:root .sf-backend-wrp.sf-designer-dlg .k-tabstrip > .k-content:focus {
+  outline: 0 !important;
+}
+
 :root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection {
   border: none !important;
   background: none !important;

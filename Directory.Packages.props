@@ -8,10 +8,10 @@
     <PackageVersion Include="Ninject.Web.Common" Version="3.2.3.0" />
     <PackageVersion Include="RazorGenerator.MsBuild" Version="2.4.1" />
     <PackageVersion Include="RazorGenerator.Mvc" Version="2.3.12" />
-    <PackageVersion Include="Telerik.Sitefinity.ServicesImpl" Version="15.0.8200" />
-    <PackageVersion Include="Telerik.Sitefinity.Core" Version="15.0.8200" />
-    <PackageVersion Include="Telerik.Sitefinity.Content" Version="15.0.8200" />
-    <PackageVersion Include="Telerik.Sitefinity.Mvc" Version="15.0.8200" />
+    <PackageVersion Include="Telerik.Sitefinity.ServicesImpl" Version="15.1.8300" />
+    <PackageVersion Include="Telerik.Sitefinity.Core" Version="15.1.8300" />
+    <PackageVersion Include="Telerik.Sitefinity.Content" Version="15.1.8300" />
+    <PackageVersion Include="Telerik.Sitefinity.Mvc" Version="15.1.8300" />
     <PackageVersion Include="Telerik.DataAccess.Fluent" Version="2020.0.428.1" />
   </ItemGroup>
 </Project>

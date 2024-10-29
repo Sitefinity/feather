@@ -13,6 +13,7 @@ using Telerik.Sitefinity.Lifecycle;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.GenericContent;
 using Telerik.Sitefinity.Publishing;
+using Telerik.Sitefinity.Security.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
 using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
@@ -196,9 +197,16 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
                     if (selectionMode.ToString() == SelectionMode.SelectedItems.ToString())
                     {
                         isSelectedItem = serializedSelectedItemsIds.Contains(item.Id.ToString());
-                        if (!isSelectedItem && item is ILifecycleDataItemGeneric itemAsLifecycleGeneric)
+                        if (!isSelectedItem)
                         {
-                            isSelectedItem = serializedSelectedItemsIds.Contains(itemAsLifecycleGeneric.OriginalContentId.ToString());
+                            if (item is ILifecycleDataItemGeneric itemAsLifecycleGeneric)
+                            {
+                                isSelectedItem = serializedSelectedItemsIds.Contains(itemAsLifecycleGeneric.OriginalContentId.ToString());
+                            }
+                            else if (item is SitefinityProfile profile)
+                            {
+                                isSelectedItem = serializedSelectedItemsIds.Contains(profile.User.Id.ToString());
+                            }
                         }
                     }
                     // This is a special case for the list item as it`s parent id is stored in the selected items property
