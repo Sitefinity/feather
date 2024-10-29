@@ -1,5 +1,4 @@
-﻿
-(function ($) {
+﻿(function ($) {
     if (typeof ($telerik) != 'undefined') {
         $telerik.$(document).one('dialogRendered', function () {
             angular.$$csp().noInlineStyle = true;
@@ -140,11 +139,11 @@
                     $scope.properties = propertyService.toAssociativeArray(data.Items);
                 }
             },
-            function (errorData) {
-                $scope.feedback.showError = true;
-                if (errorData && errorData.data)
-                    $scope.feedback.errorMessage = errorData.data.Detail;
-            })
+                function (errorData) {
+                    $scope.feedback.showError = true;
+                    if (errorData && errorData.data)
+                        $scope.feedback.errorMessage = errorData.data.Detail;
+                })
             .finally(function () {
                 $scope.feedback.showLoadingIndicator = false;
             });
@@ -204,6 +203,16 @@
 
             $scope.feedback.showLoadingIndicator = true;
             $scope.feedback.showError = false;
+            var escKeyListener = function (event) {
+                if (event.key === "Escape") {
+                    $scope.$apply($scope.cancel);
+                }
+            };
+
+            document.addEventListener('keydown', escKeyListener);
+            $scope.$on('$destroy', function () {
+                document.removeEventListener('keydown', escKeyListener);
+            });
 
             //the save action - it will check which properties are changed and send only them to the server 
             $scope.save = function (saveToAllTranslations) {

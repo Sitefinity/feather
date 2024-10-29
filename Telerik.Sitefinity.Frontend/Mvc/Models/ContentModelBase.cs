@@ -15,6 +15,7 @@ using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules;
 using Telerik.Sitefinity.RelatedData;
 using Telerik.Sitefinity.Services;
+using Telerik.Sitefinity.Taxonomies;
 using Telerik.Sitefinity.Taxonomies.Model;
 using Telerik.Sitefinity.Web.Model;
 using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
@@ -527,6 +528,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
 
             var queryResult = this.FetchItems(query);
             queryResult.SetRelatedDataSourceContext();
+
+            TaxonomyApplicationState.SetTaxonomyDataSourceContext(queryResult);
 
             foreach (var item in queryResult)
             {

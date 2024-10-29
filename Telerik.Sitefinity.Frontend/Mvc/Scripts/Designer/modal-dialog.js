@@ -40,7 +40,7 @@
         var modalDialogClass = 'modal-dialog-';
         var backdropClass = 'div.modal-backdrop';
 
-        var open = function (scope, attrs, resolve) {
+        var open = function (scope, attrs, resolve, onRenderedCb) {
             dialogsService.peek().hide();
 
             var uniqueClass = modalDialogClass + dialogsService.count();
@@ -57,6 +57,13 @@
             scope.$uibModalInstance = modalInstance;
 
             dialogsService.pushSelector('.' + uniqueClass);
+
+            if (typeof onRenderedCb === 'function') {
+                scope.$uibModalInstance.rendered.then(function (res) {
+                    onRenderedCb(res);
+                    return res;
+                });
+            }
 
             return scope.$uibModalInstance.result.finally(function () {
                 dialogsService.pop().remove();
@@ -79,8 +86,8 @@
                     open(scope, attrs);
                 }
                 else {
-                    scope.$openModalDialog = function (resolve) {
-                        return open(scope, attrs, resolve);
+                    scope.$openModalDialog = function (resolve, onRenderedCb) {
+                        return open(scope, attrs, resolve, onRenderedCb);
                     };
                 }
             }

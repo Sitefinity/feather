@@ -31,8 +31,7 @@
                 codeArea.focus();
                 setTimeout(codeArea.refresh, 0);
                 scope.$watch('sfModel', function (newVal, oldVal) {
-                    
-                    if (codeArea.getValue() !== newVal) {
+                    if (scope.sfModel !== undefined && codeArea.getValue() !== newVal) {
                         // Prevent error in the codeArea if the new value is undefined.
                         if (!newVal) newVal = '';
 

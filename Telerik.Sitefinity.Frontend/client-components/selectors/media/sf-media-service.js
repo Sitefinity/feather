@@ -70,7 +70,7 @@
         var getFolders = function (options, serviceUrl) {
             options = options || {};
 
-			var foldersUrl = serviceUrl + "folders/";
+            var foldersUrl = serviceUrl + "folders/";
             var url = options.parent ? foldersUrl + options.parent + "/" : foldersUrl;
 
             return serviceHelper.getResource(url).get(
@@ -126,7 +126,7 @@
         };
 
         var uploadFile = function (url, formData) {
-            
+
             var deferred = $q.defer();
             var xhr = new $window.XMLHttpRequest();
             xhr.onload = function (e) {
@@ -156,26 +156,43 @@
 
         var uploadItem = function (settings, mediaType) {
             return createItem(settings, mediaType)
-            .then(function (data) {
-                var formData = new FormData();
-                formData.append('ContentType', constants[mediaType].itemType);
-                formData.append('LibraryId', settings.libraryId);
-                formData.append('ContentId', data.Item.Id);
-                formData.append('Workflow', 'Upload');
-                formData.append('ProviderName', settings.provider || '');
-                formData.append('SkipWorkflow', 'true');
+                .then(function (data) {
+                    var formData = new FormData();
+                    formData.append('ContentType', constants[mediaType].itemType);
+                    formData.append('LibraryId', settings.libraryId);
+                    formData.append('ContentId', data.Item.Id);
+                    formData.append('Workflow', 'Upload');
+                    formData.append('ProviderName', settings.provider || '');
+                    formData.append('SkipWorkflow', 'true');
 
-                if (serverContext.getUICulture()) {
-                    formData.append('Culture', serverContext.getUICulture());
-                }
+                    if (serverContext.getUICulture()) {
+                        formData.append('Culture', serverContext.getUICulture());
+                    }
 
-                formData.append(constants[mediaType].fileFormField, settings.file);
+                    formData.append(constants[mediaType].fileFormField, settings.file);
 
-                return uploadFile(constants.uploadHandlerUrl, formData);
-            })
-            .catch(function (error) {
-                throw error;
-            });
+
+                    if (constants[mediaType].itemType == constants.videos.itemType) {
+
+                        var videoElement = document.getElementById("video-el-preview-for-upload");
+                        var canvas = document.createElement("canvas");
+
+                        canvas.width = videoElement.clientWidth;
+                        canvas.height = videoElement.clientHeight;
+
+                        var ctx = canvas.getContext("2d");
+
+                        ctx.drawImage(videoElement, 0, 0, videoElement.clientWidth, videoElement.clientHeight);
+                        
+                        var base64 = canvas.toDataURL();
+
+                        formData.append('ThumbnailResource', base64);
+                    }
+                    return uploadFile(constants.uploadHandlerUrl, formData);
+                })
+                .catch(function (error) {
+                    throw error;
+                });
         };
 
         var thumbnailProfiles = function (libraryType, viewType) {
@@ -319,9 +336,9 @@
                         provider: provider
                     };
                     return getFolders(options, constants[mediaType].parentServiceUrl)
-                              .then(function (data) {
-                                  return data.Items;
-                              });
+                        .then(function (data) {
+                            return data.Items;
+                        });
                 },
                 upload: function (model, provider) {
 

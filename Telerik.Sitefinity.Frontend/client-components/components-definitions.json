@@ -73,7 +73,15 @@
 	"components" : []
 },
 
-
+"sf-window-resize" : {
+	"scripts": [
+		"client-components/collections/sf-window-resize.js"
+	],
+	"angularModules": [
+		"sfWindowResize"
+	],
+	"components": []
+},
 
 "__________SEARCH__________" : {"scripts" : [], "angularModules": [], "components" : []},
 
@@ -446,7 +454,7 @@
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
-					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover"]
+					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover", "sf-window-resize"]
 },
 
 "sf-document-selector" : {
@@ -462,7 +470,7 @@
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
-					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover"]
+					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover", "sf-window-resize"]
 },
 
 "sf-video-selector" : {
@@ -488,7 +496,7 @@
 	],
 	"components" : ["sf-services", "sf-selectors", "sf-infinite-scroll", "sf-collection", "sf-tree", "sf-search-box", "sf-sort-box", 
 					"sf-drag-drop",	"sf-list-selector", "sf-library-selector", "sf-flat-taxon-field", "sf-provider-selector", 
-					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover"]
+					"sf-loading", "sf-expander", "sf-hierarchical-taxon-selector", "sf-bootstrap-popover", "sf-window-resize"]
 },
 
 "sf-library-selector" : {
@@ -720,7 +728,7 @@
 	"angularModules": [
 		"sfSelectors"
 	],
-	"components" : ["sf-services", "sf-selectors", "sf-collection", "sf-search-box", "sf-infinite-scroll"]
+	"components" : ["sf-services", "sf-selectors", "sf-collection", "sf-search-box", "sf-infinite-scroll", "sf-window-resize"]
 },
 
 "_____FEEDS_____" : {"scripts" : [], "angularModules": [], "components" : []},

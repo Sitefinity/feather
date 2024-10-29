@@ -78,7 +78,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
         }
 
-        private bool TryMatchUrl(string[] urlParams, RequestContext requestContext, bool setUrlParametersResolved)
+        private bool TryMatchUrl(string[] urlParams, RequestContext requestContext, bool setUrlParametersResolved, bool setToContext = true)
         {
             if (urlParams == null || urlParams.Length == 0 || !this.IsDetailsModeSupported())
                 return false;
@@ -91,7 +91,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             if (item != null && this.CanDisplayItem(item))
             {
-                SystemManager.CurrentHttpContext.Items["detailItem"] = item;
+                if(setToContext)
+                    SystemManager.CurrentHttpContext.Items["detailItem"] = item;
 
                 this.AddContentItemToRouteData(requestContext, redirectUrl, item, setUrlParametersResolved);
 
@@ -99,7 +100,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
             }
             else if (this.showDetailsViewOnChildDetailsView)
             {
-                return this.TryMatchUrl(urlParams.Take(urlParams.Length - 1).ToArray(), requestContext, setUrlParametersResolved);
+                return this.TryMatchUrl(urlParams.Take(urlParams.Length - 1).ToArray(), requestContext, setUrlParametersResolved, false);
             }
 
             return false;

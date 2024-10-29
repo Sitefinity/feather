@@ -1,6 +1,7 @@
 @model Telerik.Sitefinity.Frontend.Mvc.Models.IDesignerModel
 @using Telerik.Sitefinity.Modules.Pages
 @using Telerik.Sitefinity.Frontend.Mvc.Helpers
+@using Telerik.Sitefinity.Web
 
 <div class="sf-backend-wrp">
     @functions {
@@ -55,6 +56,7 @@
 </div>
 
 @ASP.PartialExtensions.Partial(Html, "ServerContext", new Telerik.Sitefinity.Frontend.Mvc.Models.ServerContext())
+@Html.StyleSheet(Url.WidgetContent("assets/src/sass/kendo/kendo_material_main_min.css"))
 @Html.StyleSheet(Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css"))
 @Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"))
 @Html.Script(Url.WidgetContent("Mvc/Scripts/Designer/modal-dialog.js"))
@@ -64,6 +66,9 @@
 @Html.Script(Url.WidgetContent("Mvc/Scripts/Bootstrap/js/bootstrap.min.js"))
 @Html.Script(ScriptRef.KendoAll, "top")
 @Html.Script(ScriptRef.KendoTimezones, "top")
+
+@Html.Script(Url.EmbeddedResource("Telerik.Sitefinity.Resources.Reference", "Telerik.Sitefinity.Resources.Scripts.Kendo.kendo.angular.min.js"))
+@Html.Script(Url.EmbeddedResource("Telerik.Sitefinity.Resources.Reference", "Telerik.Sitefinity.Resources.Scripts.Kendo.kendo.angular.custom.js"))
 
 <script type="text/javascript">
     (function () {
