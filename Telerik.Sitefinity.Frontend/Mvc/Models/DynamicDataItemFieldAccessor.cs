@@ -3,8 +3,10 @@ using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using Newtonsoft.Json;
+using Telerik.OpenAccess.Metadata;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Descriptors;
+using Telerik.Sitefinity.DynamicModules.Model;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules;
 using Telerik.Sitefinity.Modules.GenericContent;
@@ -26,6 +28,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             : base()
         {
             this.item = itemViewModel;
+
+            if (this.item.DataItem is IDeferredHtmlFilterContainer deferredFilterContainer)
+            {
+                deferredFilterContainer.MarkForDefferedFiltering();
+            }
         }
 
         /// <summary>
@@ -67,7 +74,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                         if(fieldType == UserFriendlyDataType.LongText)
                         {
                             var stringValue = this.GetAppropriateStringValue(value);
-                            return HtmlFilterProvider.ApplyFilters(stringValue);
+                            if (!(this.item.DataItem is IDeferredHtmlFilterContainer))
+                            {
+                                stringValue = HtmlFilterProvider.ApplyFilters(stringValue);
+                            }
+                            return stringValue;
                         }
                         else if(fieldType == UserFriendlyDataType.Link)
                         {

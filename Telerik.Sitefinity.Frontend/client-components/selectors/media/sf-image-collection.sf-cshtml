@@ -1,4 +1,4 @@
-﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()">
+﻿<div class="Media-items" sf-infinite-scroll="$parent.loadMore()" sf-window-resize>
 
 	<div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
 

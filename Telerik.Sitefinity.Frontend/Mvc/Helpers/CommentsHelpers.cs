@@ -157,13 +157,10 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             if (item != null && item is DynamicContent)
             {
-                var moduleProvider = ModuleBuilderManager.GetManager().Provider;
-                var itemType = item.GetType().FullName;
+                var itemType = item.GetType();
 
-                var dynamicContentType = moduleProvider.GetDynamicModules()
-                    .Where(m => m.Status == DynamicModuleStatus.Active)
-                    .Join(moduleProvider.GetDynamicModuleTypes().Where(t => string.Concat(t.TypeNamespace, ".", t.TypeName) == itemType), m => m.Id, t => t.ParentModuleId, (m, t) => t)
-                    .FirstOrDefault();
+                var dynamicContentType = ModuleBuilderManager.GetActiveTypes()
+                                                             .FirstOrDefault(t => t.TypeNamespace == itemType.Namespace && t.TypeName == itemType.Name);
 
                 if (dynamicContentType != null)
                 {

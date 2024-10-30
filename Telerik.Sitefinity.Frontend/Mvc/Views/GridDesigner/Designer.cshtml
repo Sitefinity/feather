@@ -56,6 +56,7 @@
     </div>
 </div>
 @ASP.PartialExtensions.Partial(Html, "ServerContext", new Telerik.Sitefinity.Frontend.Mvc.Models.ServerContext())
+@Html.StyleSheet(Url.WidgetContent("assets/src/sass/kendo/kendo_material_main_min.css"))
 @Html.StyleSheet(Url.WidgetContent("assets/dist/css/sitefinity-backend.min.css"))
 @Html.Script(Url.WidgetContent("Resources/ServerContext.js"))
 @Html.Script(Url.WidgetContent("Mvc/Scripts/server-data.js"))

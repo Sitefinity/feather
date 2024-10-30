@@ -1,11 +1,11 @@
-﻿using ServiceStack.Text;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using ServiceStack.Text;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Data;
@@ -15,10 +15,10 @@ using Telerik.Sitefinity.Frontend.Mvc.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Resources;
 using Telerik.Sitefinity.Frontend.Resources.Resolvers;
-using Telerik.Sitefinity.Security.Model;
 using Telerik.Sitefinity.Security.Sanitizers;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.OutputCache;
 using Telerik.Sitefinity.Web.UI;
 using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
 
@@ -42,7 +42,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         {
             if (controller == null)
                 throw new ArgumentNullException("controller");
-            
+
             if (contentViewDisplayMode == ContentViewDisplayMode.Detail && viewModel != null)
             {
                 return true;
@@ -136,23 +136,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (keys == null)
                 throw new ArgumentNullException("keys");
 
-            if (SystemManager.CurrentHttpContext == null)
+            var httpContext = SystemManager.CurrentHttpContext;
+            if (httpContext == null)
                 throw new InvalidOperationException("Current HttpContext is null. Cannot add cache dependencies.");
 
-            IList<CacheDependencyKey> dependencies = null;
-            if (SystemManager.CurrentHttpContext.Items.Contains(PageCacheDependencyKeys.PageData))
-            {
-                dependencies = SystemManager.CurrentHttpContext.Items[PageCacheDependencyKeys.PageData] as IList<CacheDependencyKey>;
-            }
+            string widgetId = controller.ViewData[Telerik.Sitefinity.Mvc.ControllerActionInvoker.ControlDataIdKey] as string;
 
-            if (dependencies == null)
-            {
-                dependencies = new List<CacheDependencyKey>();
-                SystemManager.CurrentHttpContext.Items.Add(PageCacheDependencyKeys.PageData, dependencies);
-            }
-
-            foreach (var key in keys)
-                dependencies.Add(key);
+            httpContext.AddCacheDependencies(keys, widgetId);
         }
 
         /// <summary>
@@ -208,7 +198,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// </summary>
         /// <param name="controller">The controller.</param>
         /// <returns>The dynamic module type.</returns>
-        public static DynamicModuleType GetDynamicContentType(this ControllerBase controller)
+        public static IDynamicModuleType GetDynamicContentType(this ControllerBase controller)
         {
             if (controller == null)
                 throw new ArgumentNullException("controller");
@@ -228,7 +218,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <returns>
         /// The dynamic module type.
         /// </returns>
-        public static DynamicModuleType GetDynamicContentType(this ControllerBase controller, string controllerName)
+        public static IDynamicModuleType GetDynamicContentType(this ControllerBase controller, string controllerName)
         {
             if (controller == null)
                 throw new ArgumentNullException("controller");
@@ -248,7 +238,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <returns>
         /// The dynamic module type.
         /// </returns>
-        public static DynamicModuleType GetDynamicContentType(string controllerName)
+        public static IDynamicModuleType GetDynamicContentType(string controllerName)
         {
             return ControllerExtensions.GetDynamicContentType(controllerName, null);
         }
@@ -261,7 +251,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <returns>
         /// The dynamic module type.
         /// </returns>
-        public static DynamicModuleType GetDynamicContentType(string controllerName, string moduleName)
+        public static IDynamicModuleType GetDynamicContentType(string controllerName, string moduleName)
         {
             return ControllerExtensions.FindDynamicContentTypes(controllerName, moduleName).FirstOrDefault();
         }
@@ -320,7 +310,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
         /// <returns>
         /// The dynamic module types.
         /// </returns>
-        internal static IQueryable<DynamicModuleType> FindDynamicContentTypes(string controllerName, string moduleName)
+        internal static IEnumerable<IDynamicModuleType> FindDynamicContentTypes(string controllerName, string moduleName)
         {
             if (controllerName == null)
                 throw new ArgumentNullException("controllerName");
@@ -328,20 +318,15 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             if (SystemManager.GetModule("ModuleBuilder") == null)
                 return Enumerable.Empty<DynamicModuleType>().AsQueryable();
 
-            // TODO: use ModuleBuilderManager.GetModules()
-            var moduleProvider = ModuleBuilderManager.GetManager().Provider;
+            var dynamicModuleTypes = ModuleBuilderManager.GetActiveTypes()
+                                        .Where(t => string.Equals(t.TypeName, controllerName, StringComparison.OrdinalIgnoreCase));
 
-            var dynamicModuleTypes = moduleProvider.GetDynamicModuleTypes().Where(t => t.TypeName == controllerName);
             if (!moduleName.IsNullOrWhitespace())
             {
                 dynamicModuleTypes = dynamicModuleTypes.Where(t => t.ModuleName == moduleName);
             }
 
-            var dynamicContentTypes = moduleProvider.GetDynamicModules()
-                .Where(m => m.Status == DynamicModuleStatus.Active)
-                .Join(dynamicModuleTypes, m => m.Id, t => t.ParentModuleId, (m, t) => t);
-
-            return dynamicContentTypes;
+            return dynamicModuleTypes;
         }
 
         /// <summary>
@@ -605,12 +590,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             var viewExtensions = ControllerExtensions.GetViewFileExtensions(controller);
             var widgetName = controller.RouteData != null ? controller.RouteData.Values["widgetName"] as string : null;
 
-            var baseFiles = ControllerExtensions.GetViewsForAssembly(controller.GetType().Assembly, viewLocations, viewExtensions, 
+            var baseFiles = ControllerExtensions.GetViewsForAssembly(controller.GetType().Assembly, viewLocations, viewExtensions,
                                                                      ref viewFilesMappings, moduleName);
             if (!widgetName.IsNullOrEmpty())
             {
                 var widgetAssembly = FrontendManager.ControllerFactory.ResolveControllerType(widgetName).Assembly;
-                var widgetFiles = ControllerExtensions.GetViewsForAssembly(widgetAssembly, viewLocations, viewExtensions, 
+                var widgetFiles = ControllerExtensions.GetViewsForAssembly(widgetAssembly, viewLocations, viewExtensions,
                                                                            ref viewFilesMappings, moduleName);
                 return baseFiles.Union(widgetFiles);
             }
@@ -626,7 +611,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
                 .Distinct();
         }
 
-        private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions, 
+        private static IEnumerable<string> GetViewsForAssembly(Assembly assembly, IEnumerable<string> viewLocations, IEnumerable<string> viewExtensions,
                                                                ref Dictionary<string, string> viewFilesMappings, string moduleName = null)
         {
             var pathDef = FrontendManager.VirtualPathBuilder.GetPathDefinition(assembly, moduleName);

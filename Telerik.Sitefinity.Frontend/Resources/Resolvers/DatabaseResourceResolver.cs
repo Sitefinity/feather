@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Telerik.Sitefinity.Abstractions.VirtualPath;
 using Telerik.Sitefinity.Data;
+using Telerik.Sitefinity.DynamicModules.Builder;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Modules.Pages;
@@ -174,11 +175,11 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         }
 
         protected virtual bool TryResolveControlPresentationParams(
-            PathDefinition virtualPathDefinition, 
-            string virtualPath, 
-            out bool isValidPath, 
-            out string name, 
-            out IEnumerable<string> controllers, 
+            PathDefinition virtualPathDefinition,
+            string virtualPath,
+            out bool isValidPath,
+            out string name,
+            out IEnumerable<string> controllers,
             out string[] areaNames)
         {
             if (virtualPathDefinition == null)
@@ -304,8 +305,7 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
             {
                 foreach (var dynamicType in dynamicTypes)
                 {
-                    var moduleProvider = Telerik.Sitefinity.DynamicModules.Builder.ModuleBuilderManager.GetManager().Provider;
-                    var dynamicModule = moduleProvider.GetDynamicModule(dynamicType.ParentModuleId);
+                    var dynamicModule = ModuleBuilderManager.GetModules().FirstOrDefault(m => m.Id == dynamicType.ParentModuleId);
                     var areaName = this.GetDynamicTypeAreaName(dynamicModule.Title, dynamicType.DisplayName);
                     if (areaName == null) continue;
 

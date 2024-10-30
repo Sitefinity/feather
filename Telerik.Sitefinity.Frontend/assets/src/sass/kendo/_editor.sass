@@ -2,6 +2,16 @@
 // We don't have access to the markup,
 // that's why we're cascading
 
+@mixin toolbar-tool-dimentions
+	height: 48px
+	width: 46px
+	border: 0
+
+@mixin picker-input-solid
+	border-color: rgba(0, 0, 0, 0.38)
+	color: rgba(0, 0, 0, 0.87)
+	background-color: #f5f5f5
+
 .modal-body
 	.k-editor-toolbar-wrap
 		padding-left: 0
@@ -9,9 +19,10 @@
 		padding: 0 60px 0 20px
 		box-sizing: border-box
 		overflow: visible
+		box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
 
-		.k-tool-group, 
-		.k-tool:not(.k-disabled),
+		.k-toolbar-button-group, 
+		.k-toolbar-tool:not(.k-disabled),
 		.k-selected
 			display: inline-flex
 			align-items: center
@@ -21,7 +32,10 @@
 			opacity: 0
 
 	.k-editor
+		width: 100%
+		height: 100%
 		margin-right: 6px
+		display: table
 		//background: transparent
 		border: none
 		border-collapse: collapse
@@ -39,11 +53,42 @@
 			border-radius: 0
 			border-color: #f2f2f2
 
+			&.k-picker-solid
+				@include picker-input-solid
+
+			.k-icon-button
+				padding: 4px
+
+			.k-button-icon
+				min-width: 20px
+				min-height: 20px
+
+		.k-input-solid
+			@include picker-input-solid
+
 		.k-input-inner
-			font-size: inherit!important;
+			font-size: inherit
+			line-height: 1.25
 			box-sizing: border-box
+			padding: 8px 16px
+			border: 0
+			color: inherit
+			background: 0
+
+
 			.k-input-value-text
 				font-size: 13px
+
+			.k-svg-icon
+				width: 16px
+
+		.k-clear-value
+			width: 32px
+			height: 32px
+			opacity: .5
+
+			&:hover
+				opacity: 1
 
 		.k-icon-color-preview
 			overflow: visible
@@ -66,7 +111,7 @@
 			// min-height: 50px
 			background: #f2f2f2
 
-			.k-tool
+			.k-toolbar-tool
 				color: inherit
 				padding: 0
 				&.k-disabled
@@ -86,19 +131,19 @@
 				li
 					opacity: 0.4
 
-				> li:last-child,
-				> li:nth-last-child(2)
+				> div:last-child,
+				> div:nth-last-child(2)
 					position: static
 
-			> li:last-child,
-			> li:nth-last-child(2)
+			> div:last-child,
+			> div:nth-last-child(2)
 				position: absolute
 
-			> li:last-child
+			> div:last-child
 				top: 10px
 				right: 20px
 
-			> li:nth-last-child(2)
+			> div:nth-last-child(2)
 				top: -56px
 				right: 49px
 				.custom-tool
@@ -107,24 +152,39 @@
 						background: transparent
 						color: #333
 
-			.k-tool-group
+			.k-toolbar-button-group
 				margin: 0
-				+ .k-tool-group
+				+ .k-toolbar-button-group
 					border-left: 0
-				.k-tool
-					height: 48px
-					width: 46px
-					border: 0
-				.custom-tool
-					color: #797979
 
-					&:hover
-						color: #000
-					&.show-all-button
-						width: 40px !important
-					&.btn
-						margin-top: 1px
-						margin-right: -12px
+				.k-toolbar-tool
+					@include toolbar-tool-dimentions
+
+			.k-toolbar-item
+				.k-toolbar-tool
+					@include toolbar-tool-dimentions
+
+			.k-toolbar-tool.k-toolbar-button
+				@include toolbar-tool-dimentions
+
+			.custom-tool
+				color: #797979
+
+				&:hover
+					color: #000
+				&.show-all-button
+					width: 40px !important
+				&.btn
+					margin-top: 1px
+					margin-right: -12px
+			
+			.k-colorpicker
+				width: min-content
+
+				.k-input-inner
+					width: 1.25em
+					height: 1.25em
+					padding: 8px
 
 		.k-editable-area
 			vertical-align: top
@@ -148,7 +208,7 @@
 				width: 100%
 				height: 100%
 
-		.k-tool
+		.k-toolbar-tool
 			transition: 0.2s
 			.glyphicon
 				color: #333
@@ -163,8 +223,11 @@
 			&.k-state-hover, &:hover
 				border-radius: 0
 
+			&[data-command="formatting"]
+				background: unset
+
 		.k-selected,
-		.k-tool.k-active
+		.k-toolbar-tool.k-active
 				background: #ddd
 
 .kendo-content-block
@@ -175,7 +238,7 @@
 	&.kendo-content-block--sh
 		margin-bottom: 0
 
-	.k-tool
+	.k-toolbar-tool
 		background-color: transparent
 
 .modal-dialog:not(.modal-full-screen)
@@ -198,9 +261,6 @@
 	.kendo-content-block
 		display: block
 		height: 100%
-
-	.k-editor
-		height: 100% !important
 
 	.k-content
 		border: 1px dashed transparent
@@ -250,5 +310,5 @@
 		&:before
 			border-color: #333
 
-.modal-body .sf-content-block-in-newsletter .k-editor .k-editor-toolbar>li:nth-last-child(2)
+.modal-body .sf-content-block-in-newsletter .k-editor .k-editor-toolbar>div:nth-last-child(2)
 	top: -127px

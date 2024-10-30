@@ -42,6 +42,8 @@
                                 scope.fullScreenIcon = htmlElement.find(".js-fullScreen");
                                 
                                 scope.toggleAllTools();
+                                scope.removeCommandAttributes();
+                                scope.overrideClickEvents();
                             }
                         });
 
@@ -55,13 +57,19 @@
 
                             if (commands) {
                                 commands.split(',').forEach(function (command) {
-                                    var selector = String.format("select.k-{0},a.k-{0},span.k-{0},select.k-i-{0},a.k-i-{0},span.k-i-{0}", command.trim());
-                                    var anchor = toolbar.find(selector).parents('li');
-                                    anchor.toggleClass("invisible-group", !scope.showAllCommands);
+                                    var selector = String.format("select.k-{0},a.k-{0},span.k-{0},select.k-i-{0},a.k-i-{0},span.k-i-{0},.k-svg-i-{0}", command.trim());
+                                    var anchor = toolbar.find(selector);
+                                    var parent = anchor.parents('.k-toolbar-tool');
+
+                                    if (!anchor.length) {
+                                        parent = toolbar.find(".k-toolbar-tool[data-command=" + command + "]");
+                                    }
+
+                                    parent.toggleClass("invisible-group", !scope.showAllCommands);
                                 });
                             }
                             else {
-                                toolbar.find('.show-all-button').parents('li').hide();
+                                toolbar.find('.show-all-button').parents('.k-toolbar-tool').hide();
                             }
                             if (scope.showAllCommands) {
                                 toolbar.find('.show-all-button').addClass('k-selected');
@@ -70,6 +78,31 @@
                             }
                             scope.showAllCommands = !scope.showAllCommands;
                         };
+
+                        scope.removeCommandAttributes = function () {
+                            var PROPERTY_NAME = 'command';
+                            var TOOLS_TO_REMOVE_COMAND_ATTRIBUTE_FROM = ['createLink', 'insertImage', 'insertFile'];
+
+                            TOOLS_TO_REMOVE_COMAND_ATTRIBUTE_FROM.forEach(function (tool) {
+                                var el = $(htmlElement.find('[data-command="' + tool + '"]'));
+                                el.removeAttr('data-' + PROPERTY_NAME);
+                                el.removeData('PROPERTY_NAME');
+                            });
+                        };
+
+                        scope.overrideClickEvents = function () {
+                            $('[title="Insert hyperlink"]').click(function () {
+                                scope.openLinkSelector();
+                            });
+
+                            $('[title="Insert image"]').click(function () {
+                                scope.openImageSelector();
+                            });
+
+                            $('[title="Insert file"]').click(function (e) {
+                                scope.openDocumentSelector();
+                            });
+                        };
                     },
                     post: function (scope, element) {
                         scope.htmlViewLabel = 'HTML';
@@ -77,7 +110,6 @@
                         var htmlElement = element;
                         var isInHtmlView = false;
                         var isFullScreen = false;
-                        var originalEditorSizes = null;
                         var fullToolbar = null;
                         var shortToolbar = null;
                         var customButtons = null;
@@ -98,7 +130,7 @@
                         }
 
                         function getAnchorElement(range) {
-                            var command = scope.editor.toolbar.tools.createLink.command({ range: range });
+                            var command = scope.editor.tools.createLink.command({ range: range });
 
                             var nodes = kendo.ui.editor.RangeUtils.textNodes(range);
                             var aTag = nodes.length ? command.formatter.finder.findSuitable(nodes[0]) : null;
@@ -124,6 +156,14 @@
                             }
                         }
 
+                        function addMissingAttributesToPropertyModal (modalId, templateUrl, dialogController) {
+                            var el = document.getElementById(modalId);
+
+                            el.setAttribute("template-url", templateUrl);
+                            el.setAttribute("dialog-controller", dialogController);
+                            $compile(el)(scope);
+                        }
+
                         scope.openLinkSelector = function () {
                             var range = scope.editor.getRange();
                             var aTag = getAnchorElement(range);
@@ -144,16 +184,18 @@
                         };
 
                         scope.openDocumentSelector = function () {
-                            scope.mediaPropertiesDialog =
+                            var mediaPropertiesDialog =
                                     serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-document-properties-content-block.sf-cshtml');
-                            scope.sfMediaPropertiesController = "sfDocumentPropertiesController";
+                            var sfMediaPropertiesController = "sfDocumentPropertiesController";
 
                             var range = scope.editor.getRange();
                             var aTag = getAnchorElement(range);
                             var properties = aTag ? mediaMarkupService.document.properties(aTag.outerHTML) : null;
 
+                            addMissingAttributesToPropertyModal("mediaPropertiesModal", mediaPropertiesDialog, sfMediaPropertiesController);
+
                             setTimeout(function () {
-                                angular.element(htmlElement.find('.mediaPropertiesModal'))
+                                angular.element(htmlElement.find('#mediaPropertiesModal'))
                                     .scope()
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
@@ -173,15 +215,17 @@
                         };
 
                         scope.openImageSelector = function () {
-                            scope.mediaPropertiesDialog =
+                            var mediaPropertiesDialog =
                                serverContext.getEmbeddedResourceUrl('Telerik.Sitefinity.Frontend', 'client-components/fields/html-field/sf-image-properties-content-block.sf-cshtml');
-                            scope.sfMediaPropertiesController = "sfImagePropertiesController";
+                            var sfMediaPropertiesController = "sfImagePropertiesController";
 
                             var range = scope.editor.getRange();
                             var properties = getPropertiesFromTag('image', 'span.sf-Image-wrapper', 'img');
 
+                            addMissingAttributesToPropertyModal("mediaPropertiesModal", mediaPropertiesDialog, sfMediaPropertiesController);
+
                             setTimeout(function () {
-                                angular.element(htmlElement.find('.mediaPropertiesModal'))
+                                angular.element(htmlElement.find('#mediaPropertiesModal'))
                                     .scope()
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
@@ -259,6 +303,22 @@
                                     });
                             }, 0);
                         };
+
+                        $(".show-all-button").click(function () {
+                            scope.toggleAllTools();
+                        });
+
+                        $(".js-htmlview").click(function () {
+                            scope.toggleHtmlView();
+                        });
+
+                        $(".toggle-full-screen").click(function () {
+                            scope.toggleFullScreen();
+                        });
+
+                        $(".open-video").click(function () {
+                            scope.openVideoSelector();
+                        });
 
                         scope.toggleHtmlView = function () {
                             if (scope.editor === null)

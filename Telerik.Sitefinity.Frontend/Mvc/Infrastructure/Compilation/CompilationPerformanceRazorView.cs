@@ -10,6 +10,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using Telerik.Sitefinity.Abstractions;
 using Telerik.Sitefinity.DynamicModules.Builder;
+using Telerik.Sitefinity.DynamicModules.Builder.Model;
 using Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers;
 using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Frontend.Resources;
@@ -255,8 +256,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Compilation
                 if (model != null)
                 {
                     var contentType = model.ContentType;
-                    var manager = ModuleBuilderManager.GetManager().Provider;
-                    var dynamicType = manager.GetDynamicModuleTypes().FirstOrDefault(t => t.TypeName == contentType.Name && t.TypeNamespace == contentType.Namespace);
+
+                    var dynamicType = ModuleBuilderManager.GetModules().GetTypeByFullName(contentType.FullName);
                     if (dynamicType != null)
                         return dynamicType.DisplayName;
                 }

@@ -6,14 +6,18 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
+using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.Descriptors;
+using Telerik.Sitefinity.DynamicModules.Builder.Model;
 using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Locations.Configuration;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.RelatedData;
+using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies;
 using Telerik.Sitefinity.Taxonomies.Model;
+using Telerik.Sitefinity.Web;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Models
 {
@@ -297,15 +301,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
                 return cachedResult as IList<FlatTaxon>;
 
-            var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
-            TaxonomyManager manager = TaxonomyManager.GetManager();
+            var taxa = TaxonomyApplicationState.GetTaxa<FlatTaxon>(this.DataItem, fieldName);
 
-            var taxonNames = manager.GetTaxa<FlatTaxon>()
-                    .Where(t => taxonIds.Contains(t.Id)).ToList();
+            this.cachedFieldValues[cahcedResultKey] = taxa;
 
-            this.cachedFieldValues[cahcedResultKey] = taxonNames;
-
-            return taxonNames;
+            return taxa;
         }
 
         /// <summary>
@@ -321,14 +321,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (this.cachedFieldValues.TryGetValue(cahcedResultKey, out cachedResult))
                 return cachedResult as IList<HierarchicalTaxon>;
 
-            var taxonIds = this.Fields.GetMemberValue(fieldName) as IList<Guid>;
-            TaxonomyManager manager = TaxonomyManager.GetManager();
-           
-            var taxonNames = manager.GetTaxa<HierarchicalTaxon>()
-                   .Where(t => taxonIds.Contains(t.Id)).ToList();
-            this.cachedFieldValues[cahcedResultKey] = taxonNames;
+            var taxa = TaxonomyApplicationState.GetTaxa<HierarchicalTaxon>(this.DataItem, fieldName);
 
-            return taxonNames;
+            this.cachedFieldValues[cahcedResultKey] = taxa;
+
+            return taxa;
         }
 
         /// <summary>
@@ -384,6 +381,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             else
                 result = null;
 
+            AddCacheDependenciesForRelatedItems(relatedItems);
             this.cachedFieldValues[cahcedResultKey] = result;
 
             return result;
@@ -406,10 +404,12 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             if (this.TryGetResultFromRelatedDataPropertyDescriptor<IDataItem>(fieldName, out relatedItem))
             {
                 result = relatedItem == null ? null : new ItemViewModel(relatedItem);
+                AddCacheDependenciesForRelatedItems(new []{ relatedItem });
             }
             else
             {
                 var relatedItems = this.DataItem.GetRelatedItems(fieldName);
+                AddCacheDependenciesForRelatedItems(relatedItems);
 
                 if (relatedItems != null)
                     result = relatedItems.ToArray().Select(item => new ItemViewModel(item)).FirstOrDefault();
@@ -461,6 +461,48 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         /// Contains the cached field values.
         /// </summary>
         private Dictionary<string, object> cachedFieldValues = new Dictionary<string, object>();
+
+        private static void AddCacheDependenciesForRelatedItems(IEnumerable<IDataItem> relatedItems)
+        {
+            if (relatedItems == null || !relatedItems.Any() || (relatedItems.Count() == 1 && relatedItems.First() == null))
+            {
+                return;
+            }
+
+            var cacheDependencyKeys = new List<CacheDependencyKey>();
+            var itemType = relatedItems.First().GetType();
+            if (relatedItems.Count() > 10)
+            {
+                cacheDependencyKeys = OutputCacheDependencyHelper.GetPublishedContentCacheDependencyKeys(itemType, relatedItems.First().Provider.ToString()).ToList();
+            }
+            else
+            {
+                foreach (var relatedItem in relatedItems)
+                {
+                    cacheDependencyKeys.AddRange(OutputCacheDependencyHelper.GetPublishedContentCacheDependencyKeys(itemType, relatedItem.Id));
+                }
+            }
+
+            AddCacheDependencyKeys(cacheDependencyKeys);
+        }
+
+        private static void AddCacheDependencyKeys(IList<CacheDependencyKey> cacheDependencyKeys)
+        {
+            var current = SystemManager.CurrentHttpContext.Items[PageCacheDependencyKeys.PageData] as IList<CacheDependencyKey>;
+            if (current != null)
+            {
+                foreach (var cacheDependencyKey in cacheDependencyKeys)
+                {
+                    current.Add(cacheDependencyKey);
+                }
+            }
+            else
+            { 
+                current = cacheDependencyKeys;
+            }
+
+            SystemManager.CurrentHttpContext.Items[PageCacheDependencyKeys.PageData] = current;
+        }
 
         #endregion
     }

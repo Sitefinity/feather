@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -66,7 +67,9 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
         protected override string CurrentGetFileHash(PathDefinition definition, string virtualPath, IEnumerable virtualPathDependencies)
         {
             var assembly = this.GetAssembly(definition);
-            return assembly.GetName().Version.ToString();
+            var hash = GetFileHash(assembly.Location);
+
+            return hash;
         }
 
         /// <summary>
@@ -97,5 +100,20 @@ namespace Telerik.Sitefinity.Frontend.Resources.Resolvers
 
             return path;
         }
+
+        private static string GetFileHash(string path)
+        {
+            string hash;
+            if (!fileHashCache.TryGetValue(path, out hash))
+            {
+                var dateTime = File.GetLastWriteTimeUtc(path);
+                hash = dateTime.GetHashCode().ToString();
+                fileHashCache.TryAdd(path, hash);
+            }
+
+            return hash;
+        }
+
+        private static ConcurrentDictionary<string, string> fileHashCache = new ConcurrentDictionary<string, string>();
     }
 }
