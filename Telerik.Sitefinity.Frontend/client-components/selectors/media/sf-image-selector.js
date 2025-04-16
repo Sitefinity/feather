@@ -248,6 +248,12 @@
                                         // Remove unnecessary (non-numeric) characters from LastModified string
                                         for (var key in response.Items) {
                                             var item = response.Items[key];
+
+                                            // We can't retrive these properties for root libraries
+                                            if (item.hasOwnProperty("ImagesCount") && item.hasOwnProperty("LibrariesCount")) {
+                                                item.metricsAvailable = true;
+                                            }
+
                                             if (item.LastModified) {
                                                 item.LastModified = removeNonNumeric(item.LastModified);
                                             }
@@ -260,7 +266,10 @@
                                             if (item.LibrariesCount) {
                                                 item.LibrariesCount = removeNonNumeric(item.LibrariesCount);
                                                 item.LibrariesCount = item.LibrariesCount + (item.LibrariesCount == 1 ? " folder" : " folders");
+                                            } else {
+                                                item.LibrariesCount = "No folders";
                                             }
+
                                         }
 
                                         if (appendItems) {
@@ -808,6 +817,10 @@
             };
 
             $scope.cancelUpload = function () {
+                var inputs = document.getElementsByClassName('file-upload-chooser-input');
+                if (inputs && inputs.length == 1) {
+                    inputs[0].value = '';
+                }
                 $uibModalInstance.dismiss();
             };
         }])

@@ -66,7 +66,6 @@ namespace Telerik.Sitefinity.Frontend
 
             if (upgradeFrom < new Version(12, 0))
             {
-                FrontendModuleUpgrader.CreateBootstrap4Templates();
                 FrontendModuleUpgrader.UpdateDefaultTemplateImages();
             }
 
@@ -393,14 +392,6 @@ namespace Telerik.Sitefinity.Frontend
                     }
                 }
             }
-        }
-
-        // 12.0
-        private static void CreateBootstrap4Templates()
-        {
-            var layoutManager = new LayoutFileManager();
-
-            layoutManager.CreateDefaultTemplates("Bootstrap4", "default");
         }
 
         // 14.1

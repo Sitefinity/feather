@@ -437,4 +437,5 @@
   <!-- Explicit bottom import, see https://github.com/MicrosoftDocs/visualstudio-docs/issues/3902 -->
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <Import Project="..\Build\FeatherPrecompilation.targets" />
+  <Import Project="..\Tools\GenerateResourcePackagesSHAs.targets" Condition="Exists('..\Tools\GenerateResourcePackagesSHAs.targets')" />
 </Project>

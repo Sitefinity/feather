@@ -2,19 +2,17 @@
 
 	<div ng-repeat="item in items | filter: { IsFolder : true }" class="Media-folder" ng-click="select(item)">
 
-    <span class="Media-item-info"
-            ng-show="item.metricsAvailable"
-						sf-popover-html
-						sf-popover-placement="right"
-						sf-popover-trigger="hover"
-						sf-popover-append-to-body="true"
-						sf-popover-title="{{item.Title ? item.Title.htmlEncode() : ''}}"
-						sf-popover-content="
-              {{item.LibrariesCount}}<br/>
-              {{item.ImagesCount}}
-            ">
-      i
-    </span>
+		<span class="Media-item-info"
+					ng-show="item.metricsAvailable"
+					sf-popover-html
+					sf-popover-placement="right"
+					sf-popover-trigger="hover"
+					sf-popover-append-to-body="true"
+					sf-popover-title="{{item.Title ? item.Title.htmlEncode() : ''}}"
+					sf-popover-content="<span>{{item.LibrariesCount}}</br>{{item.ImagesCount}}</span>"
+					>
+		  i
+		</span>
     
 		<div class="Media-file-wrapper" ng-if="item.IsFolder === true">
 			<div class="Media-file-thumb">

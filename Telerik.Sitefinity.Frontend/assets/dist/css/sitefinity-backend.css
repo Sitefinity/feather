@@ -9392,12 +9392,12 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   border: none !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-content.k-active {
+:root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-tabstrip-content.k-active {
   padding: 0 !important;
   border: none !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-content .text-muted {
+:root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-tabstrip-content .text-muted {
   font-size: 13px !important;
 }
 
@@ -9408,13 +9408,31 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle),
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle),
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle) {
-  margin-left: 16px !important;
+  padding-left: 16px !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle) a,
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle) a,
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle) a {
   padding-left: 14px !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle) svg,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle) svg,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle) svg {
+  width: 16px !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle):has(> .k-checkbox-wrap),
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle):has(> .k-checkbox-wrap),
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) {
+  padding-left: 0px !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) .k-icon,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) .k-icon,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) .k-icon {
+  left: 10px;
 }
 
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-icon {
@@ -9430,16 +9448,16 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   width: 16px !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-item {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item {
   padding-left: 20px !important;
   position: relative;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-item > div {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item > div {
   position: relative;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-in {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-leaf {
   padding: 0 !important;
   margin: 0 !important;
   border: 0 !important;
@@ -9525,7 +9543,7 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   z-index: 1;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-checkbox-wrapper {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-checkbox-wrap {
   position: absolute;
   margin-top: 0 !important;
   margin-left: 0 !important;
@@ -9535,7 +9553,7 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   left: 32px;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-checkbox-wrapper + .k-in a {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-checkbox-wrap + .k-treeview-leaf a {
   padding-left: 55px !important;
 }
 
@@ -9546,12 +9564,12 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   box-shadow: none !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group > .k-group {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group > .k-treeview-group {
   overflow: hidden !important;
   border-bottom: 1px solid #ddd !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group > .k-group > li {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group > .k-treeview-group > li {
   padding-left: 0 !important;
   position: relative;
 }
@@ -9565,7 +9583,7 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   left: 10px;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-treeview--taxon .k-treeview .k-checkbox-wrapper {
+:root:root:root:root:root .sf-backend-wrp .k-treeview--taxon .k-treeview .k-checkbox-wrap {
   top: 10px;
   left: 32px;
 }
@@ -9648,6 +9666,28 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
 :root:root:root:root:root .sf-backend-wrp ::selection {
   background: #1E8EFF !important;
   color: #fff !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-treeview-group {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  position: relative;
+  outline: 0 !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-treeview-item {
+  outline-style: none !important;
+  margin: 0 !important;
+  padding: 0 0 0 16px !important;
+  border-width: 0 !important;
+  display: block;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-tabstrip-items-wrapper .k-item::after {
+  border-width: 0 !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .m-top-none {

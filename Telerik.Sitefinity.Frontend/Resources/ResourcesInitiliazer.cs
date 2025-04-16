@@ -14,6 +14,7 @@ using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Pages.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Utilities.TypeConverters;
+using Telerik.Sitefinity.Versioning;
 using Telerik.Sitefinity.Web.UI;
 
 namespace Telerik.Sitefinity.Frontend.Resources
@@ -75,9 +76,21 @@ namespace Telerik.Sitefinity.Frontend.Resources
                 var controlType = TypeResolutionService.ResolveType(controlPresentationItem.ControlType, throwOnError: false);
 
                 if (controlType != null && typeof(IController).IsAssignableFrom(controlType) && !controlPresentationItem.FriendlyControlName.Contains(MvcConstants.MvcSuffix))
+                {
                     controlPresentationItem.FriendlyControlName = string.Format(CultureInfo.InvariantCulture, MvcConstants.MvcFieldControlNameTemplate, controlPresentationItem.FriendlyControlName);
 
-                manager.SaveChanges();
+                    // Update already created item version, otherwise revision item will not containg updated FriendlyControlName
+                    var versionManager = VersionManager.GetManager();
+                    var versions = versionManager.GetItemVersionHistory(itemId);
+
+                    if (versions.Count == 1)
+                    {
+                        versions[0].Data = versionManager.Provider.Serialize(controlPresentationItem);
+                        versionManager.SaveChanges();
+                    }
+
+                    manager.SaveChanges();
+                }
             }
         }
 

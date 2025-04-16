@@ -98,11 +98,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             if (contentPath.StartsWith("~", StringComparison.Ordinal) || contentPath.StartsWith("/", StringComparison.Ordinal) || contentPath.Contains("://"))
             {
                 var url = UrlTransformations.AppendParam(contentPath, PackageManager.PackageUrlParameterName, packageName);
+                url = UrlHelpers.AppendVersion(url);
                 return helper.Content(url);
             }
 
             var resourceUrl = string.Format("~/{0}/{1}", FrontendManager.VirtualPathBuilder.GetVirtualPath(assemblyName), contentPath);
             var contentResolvedPath = UrlTransformations.AppendParam(resourceUrl, PackageManager.PackageUrlParameterName, packageName);
+            contentResolvedPath = UrlHelpers.AppendVersion(contentResolvedPath);
 
             return helper.Content(contentResolvedPath);
         }

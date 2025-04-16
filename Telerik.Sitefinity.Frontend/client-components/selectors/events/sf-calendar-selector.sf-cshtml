@@ -8,7 +8,7 @@
 <div class="modal-body">
   <div class="alert alert-danger ng-hide" ng-show="sfMaxItemsLimitation.showErrorMessage">
     @(Res.Get<ClientComponentsResources>().ExceededSelectionLimit)</div>
-    <div kendo-tab-strip k-animation="false" k-animation="false" class="k-tabstrip--selection">
+    <div kendo-tab-strip k-animation="false" class="k-tabstrip--selection">
         <ul ng-show="multiselect">
             <li ng-class="{true:'k-state-active', false:''}[!isItemSelected() || multiselect === false]" ng-click="removeUnselectedItems()">
                 @(Res.Get<ClientComponentsResources>().All)

@@ -50,7 +50,7 @@ param($installPath, $toolsPath, $package, $project)
   $projectDirectory = $fileInfo.DirectoryName
 
   # Make sure all Resource Packages have RazorGenerator directives
-  $generatorDirectivesPath = "$projectDirectory\ResourcePackages\Bootstrap\razorgenerator.directives"
+  $generatorDirectivesPath = "$projectDirectory\ResourcePackages\Bootstrap5\razorgenerator.directives"
   if (Test-Path $generatorDirectivesPath) 
   {
     Get-ChildItem "$projectDirectory\ResourcePackages" -Directory -Exclude "Bootstrap" |
@@ -100,3 +100,5 @@ param($installPath, $toolsPath, $package, $project)
   {
     Write-Host "AssemblyInfo not found."
   }
+
+  . "$PSScriptRoot\UpdateDefaultTemplates.ps1" -resourcePackagesDirectory "$projectDirectory\ResourcePackages"
