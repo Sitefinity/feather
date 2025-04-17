@@ -105,8 +105,6 @@
                         };
                     },
                     post: function (scope, element) {
-                        scope.htmlViewLabel = 'HTML';
-
                         var htmlElement = element;
                         var isInHtmlView = false;
                         var isFullScreen = false;

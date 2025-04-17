@@ -11,10 +11,19 @@
 	.k-treeview-mid,
 	.k-treeview-bot
 		&:has(> .k-treeview-toggle)
-			margin-left: 16px
+			padding-left: 16px
 
 			a
 				padding-left: 14px
+
+			svg
+				width: 16px
+
+		&:has(> .k-treeview-toggle):has(> .k-checkbox-wrap)
+			padding-left: 0px
+
+			.k-icon
+				left: 10px
 
 	.k-icon
 		margin: 0
@@ -28,7 +37,7 @@
 			width: 16px
 
 	// Item
-	.k-item
+	.k-treeview-item
 		padding-left: 20px
 		position: relative
 
@@ -36,7 +45,7 @@
 			position: relative
 
 	// Parent element of the link below
-	.k-in
+	.k-treeview-leaf
 		padding: 0
 		margin: 0
 		border: 0
@@ -132,7 +141,7 @@
 			z-index: 1
 
 	// Checkbox when list has multiselect
-	.k-checkbox-wrapper
+	.k-checkbox-wrap
 		position: absolute
 		margin-top: 0
 		margin-left: 0
@@ -141,7 +150,7 @@
 		top: 15px
 		left: 32px
 
-	.k-checkbox-wrapper + .k-in a
+	.k-checkbox-wrap + .k-treeview-leaf a
 		padding-left: 55px
 
 	// Hover & focus states
@@ -151,7 +160,7 @@
 		background: none
 		box-shadow: none
 
-	> .k-group
+	> .k-treeview-group
 		overflow: hidden
 		border-bottom: 1px solid #ddd
 
@@ -161,12 +170,14 @@
 
 .k-treeview--taxon
 	.k-treeview
+
 		.k-treeview-toggle
 			margin-left: 0 !important
+
 		.k-icon
 			top: 13px
 			left: 10px
 
-		.k-checkbox-wrapper
+		.k-checkbox-wrap
 			top: 10px
 			left: 32px

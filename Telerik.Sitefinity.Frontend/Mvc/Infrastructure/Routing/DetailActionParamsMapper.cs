@@ -16,6 +16,7 @@ using Telerik.Sitefinity.Publishing;
 using Telerik.Sitefinity.Security.Model;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Web;
+using Telerik.Sitefinity.Web.DataResolving;
 using Telerik.Sitefinity.Web.UI.ContentUI.Enums;
 
 namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
@@ -345,12 +346,30 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Routing
 
             if (!redirectUrl.IsNullOrEmpty())
             {
-                if (requestContext.HttpContext.Request.QueryString.Count > 0)
+                var node = SiteMapBase.GetCurrentProvider().CurrentNode as PageSiteNode;
+                string urlKeyPrefix = string.Empty;
+                var modelProperty = this.Controller.GetType().GetProperty("Model");
+                if (modelProperty != null)
                 {
-                    redirectUrl = $"{redirectUrl}?{requestContext.HttpContext.Request.QueryString}";
+                    var model = modelProperty.GetValue(this.Controller, null);
+                    if (model != null)
+                    {
+                        var urlKeyPrefixProperty = model.GetType().GetProperty("UrlKeyPrefix");
+                        if (urlKeyPrefixProperty != null)
+                        {
+                            urlKeyPrefix = (string)urlKeyPrefixProperty.GetValue(model);
+                        }
+                    }
                 }
 
-                requestContext.RouteData.Values[Telerik.Sitefinity.Mvc.ControllerActionInvoker.SfRedirectUrlKey] = redirectUrl;
+                var resolvedUrl = DataResolver.Resolve(item, "URL", urlKeyPrefix, node.Id.ToString());
+
+                if (requestContext.HttpContext.Request.QueryString.Count > 0)
+                {
+                    resolvedUrl = $"{resolvedUrl}?{requestContext.HttpContext.Request.QueryString}";
+                }
+
+                requestContext.RouteData.Values[Telerik.Sitefinity.Mvc.ControllerActionInvoker.SfRedirectUrlKey] = resolvedUrl;
             }
 
             if (redirectUrl.IsNullOrEmpty() == false && parameters.Length > 1 && parameters[1].ParameterType == typeof(string))

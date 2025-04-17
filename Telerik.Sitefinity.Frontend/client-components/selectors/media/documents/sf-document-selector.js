@@ -262,6 +262,8 @@
                                             if (item.LibrariesCount) {
                                                 item.LibrariesCount = removeNonNumeric(item.LibrariesCount);
                                                 item.LibrariesCount = item.LibrariesCount + (item.LibrariesCount == 1 ? " folder" : " folders");
+                                            } else {
+                                                item.LibrariesCount = "No folders";
                                             }                                            
                                         }
 
@@ -837,6 +839,10 @@
             };
 
             $scope.cancelUpload = function () {
+                var inputs = document.getElementsByClassName('file-upload-chooser-input');
+                if (inputs && inputs.length == 1) {
+                    inputs[0].value = '';
+                }
                 $uibModalInstance.dismiss();
             };
         }])

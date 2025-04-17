@@ -13,6 +13,7 @@ using Telerik.Sitefinity.GeoLocations.Model;
 using Telerik.Sitefinity.Localization;
 using Telerik.Sitefinity.Locations.Configuration;
 using Telerik.Sitefinity.Model;
+using Telerik.Sitefinity.Model.ContentLinks;
 using Telerik.Sitefinity.RelatedData;
 using Telerik.Sitefinity.Services;
 using Telerik.Sitefinity.Taxonomies;
@@ -473,7 +474,14 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             var itemType = relatedItems.First().GetType();
             if (relatedItems.Count() > 10)
             {
-                cacheDependencyKeys = OutputCacheDependencyHelper.GetPublishedContentCacheDependencyKeys(itemType, relatedItems.First().Provider.ToString()).ToList();
+                var appName = "";
+                var provider = relatedItems.First().Provider as DataProviderBase;
+                if (provider != null)
+                {
+                    appName = provider.ApplicationName;
+                }
+
+                cacheDependencyKeys.AddRange(OutputCacheDependencyHelper.GetPublishedContentCacheDependencyKeys(itemType, appName));
             }
             else
             {

@@ -304,7 +304,10 @@
                                         (librariesCount == 1 ?
                                             (" " + scope.sfLabels.libraryNameSingular.toLowerCase()) :
                                             (" " + scope.sfLabels.libraryNamePlural.toLowerCase()));
+                                } else {
+                                    item.FoldersCount = "No folders";
                                 }
+
                             }
                         };
 
@@ -888,6 +891,10 @@
                 };
 
                 $scope.cancelUpload = function () {
+                    var inputs = document.getElementsByClassName('file-upload-chooser-input');
+                    if (inputs && inputs.length == 1) {
+                        inputs[0].value = '';
+                    }
                     $uibModalInstance.dismiss();
                 };
             }])
