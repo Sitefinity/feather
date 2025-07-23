@@ -1,7 +1,7 @@
 ﻿<textarea id="editor" style="height: 340px;"
     kendo-editor="editorWidget" ng-model="sfModel"
     k-scope-field="editorWidget"
-    sf-toggle-commands="strikethrough, align-left, align-center, align-right, align-justify, subscript, supscript, fontName, fontSize, foreground-color, backColor, print"
+    sf-toggle-commands="strikethrough, align-left, align-center, align-right, align-justify, subscript, supscript, fontName, fontSize, foreground-color, droplet, print"
     k-encoded="false"
     k-stylesheets='["{{htmlFieldCssUrl}}"]',
     k-paste-cleanup="{
@@ -38,9 +38,9 @@
     ]'>
 </textarea>
 
-<sf-link-selector-modal id="linkSelectorModal"></sf-link-selector-modal>
+<sf-link-selector-modal class="linkSelectorModal"></sf-link-selector-modal>
 
-<div id="mediaPropertiesModal"
+<div class="mediaPropertiesModal"
      modal
      size="normal"
      existing-scope="true"

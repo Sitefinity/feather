@@ -8922,15 +8922,29 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor-toolbar .k-toolbar-button-group,
-:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor-toolbar .k-toolbar-tool:not(.k-disabled),
-:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor-toolbar .k-selected {
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-toolbar .k-picker,
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-toolbar .k-input {
+  width: 10em !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-toolbar .k-icon-button {
+  border-radius: 0 !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-toolbar .k-icon-button:hover {
+  background: #ddd !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-toolbar .k-toolbar-button-group,
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-toolbar .k-toolbar-tool:not(.k-disabled),
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-toolbar .k-colorpicker:not(.k-disabled),
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-toolbar .k-selected {
   display: inline-flex;
   align-items: center !important;
   justify-content: center !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor-toolbar .k-selected::before {
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-toolbar .k-selected::before {
   opacity: 0 !important;
 }
 
@@ -8987,6 +9001,19 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   background-color: #f5f5f5 !important;
 }
 
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-input .k-input-inner {
+  font-size: 13px !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-input.k-hover .k-clear-value {
+  visibility: visible;
+  right: calc(3.67142857em - 8px);
+}
+
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-input.k-hover .k-clear-value .k-icon {
+  width: 16px !important;
+}
+
 :root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-input-inner {
   font-size: inherit !important;
   line-height: 1.25 !important;
@@ -8995,10 +9022,6 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   border: 0 !important;
   color: inherit !important;
   background: 0 !important;
-}
-
-:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-input-inner .k-input-value-text {
-  font-size: 13px !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-input-inner .k-svg-icon {
@@ -9037,13 +9060,24 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   background: #f2f2f2 !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .k-toolbar-tool {
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .k-button:not(.k-input-button) {
   color: inherit !important;
   padding: 0 !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .k-toolbar-tool.k-disabled {
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .k-button:not(.k-input-button).k-disabled {
   display: none;
+}
+
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .k-tool:not(.k-state-disabled) {
+  display: inline-flex;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .k-tool:not(.k-state-disabled):hover {
+  background: #ddd !important;
+  text-decoration: none !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar.sf-toolbar-short {
@@ -9098,7 +9132,7 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   border-left: 0 !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .k-toolbar-button-group .k-toolbar-tool {
+:root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .k-button:not(.k-input-button) {
   height: 48px !important;
   width: 46px !important;
   border: 0 !important;
@@ -9125,7 +9159,8 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
 }
 
 :root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .custom-tool.show-all-button {
-  width: 40px !important;
+  width: 48px !important;
+  height: 48px !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .custom-tool.btn {
@@ -9138,9 +9173,9 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
 }
 
 :root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editor-toolbar .k-colorpicker .k-input-inner {
-  width: 1.25em !important;
-  height: 1.25em !important;
-  padding: 8px !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 6px 8px !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .modal-body .k-editor .k-editable-area {

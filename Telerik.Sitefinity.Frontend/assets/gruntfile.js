@@ -19,6 +19,9 @@ module.exports = function (grunt) {
     // load custom CSS !important task
     require('./tasks/css-important.js')(grunt);
 
+    // load kendo_material_main_min css selector modifier task
+    require('./tasks/kendo-material-css-selector-modifier.js')(grunt);
+
     // Init
     grunt.initConfig({
         timestamp: '<%= new Date().getTime() %>',
@@ -30,6 +33,15 @@ module.exports = function (grunt) {
         },
         dist: {
             path: 'dist'
+        },
+
+        kendo_material_css_selector_modifier: {
+            dist: {
+                files: [{
+                    src: ['src/sass/kendo/kendo_material_main_min.css'],
+                    dest: 'src/sass/kendo/kendo_material_main_min.css'
+                }]
+            }
         },
 
         css_important: {
@@ -238,6 +250,10 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('kendo_modifier', [
+        'kendo_material_css_selector_modifier:dist'
+    ]);
+
     grunt.registerTask('important', [
         'css_important:dist'
     ]);
@@ -251,6 +267,7 @@ module.exports = function (grunt) {
         'clean:all',
         'sass:dist',
         // 'uncss',
+        'kendo_material_css_selector_modifier:dist',
         'css_important:dist',
         'cssmin',
         'uglify:dist',
@@ -262,6 +279,7 @@ module.exports = function (grunt) {
     grunt.registerTask('dev', [
         'clean:all',
         'sass:dist',
+        'kendo_material_css_selector_modifier:dist',
         'css_important:dist',
         'cssmin',
         'uglify:dist',
