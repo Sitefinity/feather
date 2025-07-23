@@ -21,8 +21,20 @@
 		overflow: visible
 		box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
 
+	.k-toolbar
+		.k-picker,
+		.k-input
+			width: 10em
+
+		.k-icon-button
+			border-radius: 0
+
+		.k-icon-button:hover
+			background: #ddd;
+
 		.k-toolbar-button-group, 
 		.k-toolbar-tool:not(.k-disabled),
+		.k-colorpicker:not(.k-disabled),
 		.k-selected
 			display: inline-flex
 			align-items: center
@@ -66,6 +78,17 @@
 		.k-input-solid
 			@include picker-input-solid
 
+		.k-input
+			.k-input-inner
+				font-size: 13px
+			&.k-hover
+				.k-clear-value
+					visibility: visible;
+					right: calc(3.67142857em - 8px);
+
+					.k-icon
+						width: 16px
+
 		.k-input-inner
 			font-size: inherit
 			line-height: 1.25
@@ -74,10 +97,6 @@
 			border: 0
 			color: inherit
 			background: 0
-
-
-			.k-input-value-text
-				font-size: 13px
 
 			.k-svg-icon
 				width: 16px
@@ -111,11 +130,20 @@
 			// min-height: 50px
 			background: #f2f2f2
 
-			.k-toolbar-tool
+			.k-button:not(.k-input-button)
 				color: inherit
 				padding: 0
 				&.k-disabled
 					display: none
+
+			.k-tool:not(.k-state-disabled) 
+				display: inline-flex
+				align-items: center
+				justify-content: center
+				
+				&:hover
+					background: #ddd
+					text-decoration: none
 
 			&.sf-toolbar-short
 				position: absolute
@@ -157,8 +185,8 @@
 				+ .k-toolbar-button-group
 					border-left: 0
 
-				.k-toolbar-tool
-					@include toolbar-tool-dimentions
+			.k-button:not(.k-input-button)
+				@include toolbar-tool-dimentions
 
 			.k-toolbar-item
 				.k-toolbar-tool
@@ -173,7 +201,8 @@
 				&:hover
 					color: #000
 				&.show-all-button
-					width: 40px !important
+					width: 48px
+					height: 48px
 				&.btn
 					margin-top: 1px
 					margin-right: -12px
@@ -182,9 +211,9 @@
 				width: min-content
 
 				.k-input-inner
-					width: 1.25em
-					height: 1.25em
-					padding: 8px
+					width: auto
+					height: auto
+					padding: 6px 8px
 
 		.k-editable-area
 			vertical-align: top

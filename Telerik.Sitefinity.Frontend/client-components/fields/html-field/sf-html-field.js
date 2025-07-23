@@ -55,21 +55,23 @@
 
                             var commands = scope.editor.element.eq(0).attr('sf-toggle-commands');
 
+                            var parentClasses = '.k-toolbar-item, .k-button, .k-toolbar-color-picker';
+
                             if (commands) {
                                 commands.split(',').forEach(function (command) {
                                     var selector = String.format("select.k-{0},a.k-{0},span.k-{0},select.k-i-{0},a.k-i-{0},span.k-i-{0},.k-svg-i-{0}", command.trim());
                                     var anchor = toolbar.find(selector);
-                                    var parent = anchor.parents('.k-toolbar-tool');
+                                    var parent = anchor.parents(parentClasses);
 
                                     if (!anchor.length) {
-                                        parent = toolbar.find(".k-toolbar-tool[data-command=" + command + "]");
+                                        parent = toolbar.find(".k-toolbar-item[data-command=" + command + "]");
                                     }
 
                                     parent.toggleClass("invisible-group", !scope.showAllCommands);
                                 });
                             }
                             else {
-                                toolbar.find('.show-all-button').parents('.k-toolbar-tool').hide();
+                                toolbar.find('.show-all-button').parents(parentClasses).hide();
                             }
                             if (scope.showAllCommands) {
                                 toolbar.find('.show-all-button').addClass('k-selected');
@@ -91,16 +93,22 @@
                         };
 
                         scope.overrideClickEvents = function () {
-                            $('[title="Insert hyperlink"]').click(function () {
+                            element.find('[title="Insert hyperlink"]').off('click').on('click', function (e) {
+                                e.stopPropagation();
                                 scope.openLinkSelector();
+                                scope.$apply();
                             });
 
-                            $('[title="Insert image"]').click(function () {
+                            element.find('[title="Insert image"]').off('click').on('click', function (e) {
+                                e.stopPropagation();
                                 scope.openImageSelector();
+                                scope.$apply();
                             });
 
-                            $('[title="Insert file"]').click(function (e) {
+                            element.find('[title="Insert file"]').off('click').on('click', function (e) {
+                                e.stopPropagation();
                                 scope.openDocumentSelector();
+                                scope.$apply();
                             });
                         };
                     },
@@ -154,11 +162,12 @@
                             }
                         }
 
-                        function addMissingAttributesToPropertyModal (modalId, templateUrl, dialogController) {
-                            var el = document.getElementById(modalId);
+                        function addMissingAttributesToPropertyModal(modalName, templateUrl, dialogController) {
+                            var el = htmlElement[0].querySelector('.' + modalName);
 
                             el.setAttribute("template-url", templateUrl);
                             el.setAttribute("dialog-controller", dialogController);
+
                             $compile(el)(scope);
                         }
 
@@ -173,7 +182,7 @@
                                 scope.selectedHtml = scope.editor.selectedHtml();
                             }
 
-                            angular.element(htmlElement.find("#linkSelectorModal")).scope().$openModalDialog().then(function (data) {
+                            angular.element(htmlElement.find(".linkSelectorModal")).scope().$openModalDialog().then(function (data) {
                                 if (data) {
                                     scope.selectedHtml = data;
                                     scope.editor.exec("insertHtml", { html: data.outerHTML, split: true, range: range });
@@ -193,7 +202,7 @@
                             addMissingAttributesToPropertyModal("mediaPropertiesModal", mediaPropertiesDialog, sfMediaPropertiesController);
 
                             setTimeout(function () {
-                                angular.element(htmlElement.find('#mediaPropertiesModal'))
+                                angular.element(htmlElement.find('.mediaPropertiesModal'))
                                     .scope()
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
@@ -223,7 +232,7 @@
                             addMissingAttributesToPropertyModal("mediaPropertiesModal", mediaPropertiesDialog, sfMediaPropertiesController);
 
                             setTimeout(function () {
-                                angular.element(htmlElement.find('#mediaPropertiesModal'))
+                                angular.element(htmlElement.find('.mediaPropertiesModal'))
                                     .scope()
                                     .$openModalDialog({ sfModel: function () { return properties; } })
                                     .then(function (data) {
