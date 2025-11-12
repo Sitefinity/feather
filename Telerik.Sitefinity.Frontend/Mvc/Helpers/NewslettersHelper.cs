@@ -23,9 +23,8 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
             var newsLetterItem = httpContext.Items.Contains(NewslettersModule.IsNewsletter) ? (bool)httpContext.Items[NewslettersModule.IsNewsletter] : false;
 
             var isNewsletter = newsLetterItem
-                    || (httpContext.Request.UrlReferrer != null
-                        && httpContext.Request.UrlReferrer.AbsolutePath.ToLower().Contains("/sitefinity/sfnwslttrs/"))
-                    || httpContext.Request.Url.AbsolutePath.ToLower().Contains("/sitefinity/sfnwslttrs/");
+                    || (httpContext.Request.UrlReferrer != null && httpContext.Request.UrlReferrer.AbsolutePath.ToLower().Contains("/sitefinity/sfnwslttrs/"))
+                    || (httpContext.Request.Url != null && httpContext.Request.Url.AbsolutePath.ToLower().Contains("/sitefinity/sfnwslttrs/"));
 
             return isNewsletter;
         }

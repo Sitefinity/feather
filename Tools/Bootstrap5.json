@@ -51,7 +51,8 @@
                                                                   ],
     "MVC\\Views\\VideoGallery\\List.VideoGallery.cshtml":  [
                                                                "9A6494542460AA2931C2CDD53DB7CC219DB8AEE551988E9DC9DD41167A3E911D",
-                                                               "E4776F9CC851D920837C990EF1A5A5F06368572805B422767011BE6FDD1BAA0C"
+                                                               "E4776F9CC851D920837C990EF1A5A5F06368572805B422767011BE6FDD1BAA0C",
+                                                               "F40AD0369F45E85129D08D78196A3601C914E7B982B3AE3B2969FC1D81C3E446"
                                                            ],
     "MVC\\Views\\EventScheduler\\Detail.EventDetails.cshtml":  [
                                                                    "8FBA5AAB42B9D9A77C4F68308CA9DDC3567308E478EF5876001FB81018350837",
@@ -175,7 +176,8 @@
                                                             "7F9AFB8CBAB268DB08B945D2668E7B5AF1DCE0B157AC0E0CC1C795B877DA3565",
                                                             "123755AD17C0788E481F82207CB4CA42AE6C1A3E82B763E0C65386555B1B70C3",
                                                             "9EDA06971BB1E765E750EA73FA0365CEE48900FF163F2649FFDB66C30A692F3E",
-                                                            "1C9CA7649CE2598FF8BFBF9CA1FD9AB63E9903AEDCE08401D4F7EF157C58972F"
+                                                            "1C9CA7649CE2598FF8BFBF9CA1FD9AB63E9903AEDCE08401D4F7EF157C58972F",
+                                                            "B304D5DA482AB080CBCAC839B1292E21ED2505B89A466A869D20D2683E48444A"
                                                         ],
     "MVC\\Views\\FlatTaxonomy\\FlatTaxonomy.CloudList.cshtml":  [
                                                                     "2A2C50CDE2B374F0E12127AE6C08B66BF341C76952118B6F328639EFFD5BDE9D",
