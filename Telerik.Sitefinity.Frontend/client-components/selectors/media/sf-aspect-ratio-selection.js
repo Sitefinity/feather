@@ -19,9 +19,18 @@
                     return serverContext.getEmbeddedResourceUrl(assembly, url);
                 },
                 link: function (scope, element, attrs) {
-                    scope.model = scope.model || {};
-                    scope.model.aspectRatio = scope.model.aspectRatio || 'Auto';
                     scope.constants = constants;
+
+                    // Initialize model with defaults
+                    function initializeModel() {
+                        scope.model = scope.model || {};
+                        scope.model.aspectRatio = scope.model.aspectRatio || 'Auto';
+                    }
+
+                    // Use $evalAsync to ensure initialization happens after parent controller setup
+                    scope.$evalAsync(function() {
+                        initializeModel();
+                    });
 
                     scope.changeRatio = function () {
                         // Change width and height if selected ratio has ratio, width and height (check only for ratio)
