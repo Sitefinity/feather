@@ -29,7 +29,8 @@
     },
     {
         name: "fullscreen",
-        template: "<a class=\"k-toolbar-tool js-custom-tool custom-tool toggle-full-screen\" title=\"@(Res.Get<ClientComponentsResources>().Fullscreen)\"><span class=\"js-fullScreen sf-maximize\"></span></a>"
+        type: "button",
+        attributes: { "class": "k-tool js-custom-tool custom-tool toggle-full-screen", "title": "@(Res.Get<ClientComponentsResources>().Fullscreen)" }
     },
     {
         name: "htmlView",

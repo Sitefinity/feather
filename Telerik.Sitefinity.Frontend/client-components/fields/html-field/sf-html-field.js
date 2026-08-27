@@ -39,8 +39,10 @@
                                 scope.editor = widget;
                                 scope.content = scope.editor.wrapper.find('iframe.k-content').first();
 
-                                scope.fullScreenIcon = htmlElement.find(".js-fullScreen");
-                                
+                                var fullscreenButton = htmlElement.find(".toggle-full-screen");
+                                fullscreenButton.html("<span class='js-fullScreen sf-maximize'></span>");
+                                scope.fullScreenIcon = fullscreenButton.find(".js-fullScreen");
+
                                 scope.toggleAllTools();
                                 scope.removeCommandAttributes();
                                 scope.overrideClickEvents();
@@ -311,19 +313,19 @@
                             }, 0);
                         };
 
-                        $(".show-all-button").click(function () {
+                        htmlElement.find(".show-all-button").click(function () {
                             scope.toggleAllTools();
                         });
 
-                        $(".js-htmlview").click(function () {
+                        htmlElement.find(".js-htmlview").click(function () {
                             scope.toggleHtmlView();
                         });
 
-                        $(".toggle-full-screen").click(function () {
+                        htmlElement.find(".toggle-full-screen").click(function () {
                             scope.toggleFullScreen();
                         });
 
-                        $(".open-video").click(function () {
+                        htmlElement.find(".open-video").click(function () {
                             scope.openVideoSelector();
                         });
 
@@ -386,21 +388,30 @@
 
                             scope.fullScreenIcon = htmlElement.find(".js-fullScreen");
 
-                            var modalHeaderAndFooter = htmlElement.find(".modal-dialog > .modal-content > .modal-header, .modal-dialog > .modal-content > .modal-footer");
+                            var editorWrapper = htmlElement.closest('.kendo-content-block');
+                            if (!editorWrapper.length) {
+                                editorWrapper = htmlElement;
+                            }
 
                             var mainDialog = htmlElement.closest(".modal-dialog");
+                            var modalHeaderAndFooter = htmlElement.closest('.modal-content').find('> .modal-header, > .modal-footer');
+                            var sfEditorFullScreenClass = "sf-editor-fullscreen";
+                            var modalFullScreenClass = "modal-full-screen";
+                            var sfMinimizeClass = "sf-minimize";
 
                             if (isFullScreen === false) {
-                                mainDialog.addClass("modal-full-screen");
-                                scope.fullScreenIcon.addClass("sf-minimize");
+                                mainDialog.addClass(modalFullScreenClass);
+                                editorWrapper.addClass(sfEditorFullScreenClass);
+                                scope.fullScreenIcon.addClass(sfMinimizeClass);
+                                modalHeaderAndFooter.hide();
                             }
                             else {
-                                mainDialog.removeClass("modal-full-screen");
-                                scope.fullScreenIcon.removeClass("sf-minimize");
-
+                                mainDialog.removeClass(modalFullScreenClass);
+                                editorWrapper.removeClass(sfEditorFullScreenClass);
+                                scope.fullScreenIcon.removeClass(sfMinimizeClass);
+                                modalHeaderAndFooter.show();
                             }
 
-                            modalHeaderAndFooter.toggle();
                             isFullScreen = !isFullScreen;
                         };
 

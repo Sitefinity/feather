@@ -10,11 +10,19 @@
 
         <!--Upload media item-->
         <input type="file" class="file-upload-chooser-input" style="display: none !important" />
-        <div ng-show="isInUploadMode" class="Media-upload-text text-center">
+        <div ng-show="isInUploadMode && workflowSkipAllowed" class="Media-upload-text text-center">
 			<div class="icon-no-video"></div>
             <div class="lead"><a ng-click="openSelectFileDialog()" ng-bind="sfLabels.selectItemFromComputer"></a></div>
             <div>@(Res.Get<ClientComponentsResources>().SimplyDragAndDrop)</div>
         </div>
+        <div ng-show="isInUploadMode && !workflowSkipAllowed" class="Media-upload-text text-center">
+            <div class="icon-no-video"></div>
+            <div class="m-top-md col-xs-6 col-xs-offset-3">
+                <div class="alert alert-warning text-left" role="alert">
+		            <span>@(Res.Get<ClientComponentsResources>().WorkflowSkipNotAllowedMessageVideos)</span>
+                </div>
+            </div>
+	    </div>
 
         <!--Select media item-->
         <div ng-hide="isInUploadMode">

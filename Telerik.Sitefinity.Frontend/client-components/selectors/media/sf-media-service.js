@@ -35,6 +35,7 @@
             librarySettingsServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Configuration/ConfigSectionItems.svc/'),
             thumbnailServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/ThumbnailService.svc/'),
             blobStorageServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Content/BlobStorage.svc/'),
+            workflowServiceUrl: serverContext.getRootedUrl('Sitefinity/Services/Workflow/WorkflowService.svc/')
         };
 
         var getById = function (id, provider, itemType, serviceUrl) {
@@ -359,6 +360,13 @@
                         file: model.file
                     };
                     return uploadItem(settings, mediaType);
+                },
+                workflowCheck: function (provider) {
+                    var workflowCheckUrl = constants.workflowServiceUrl + 'WorkflowCheck';
+                    return serviceHelper.getResource(workflowCheckUrl).get({
+                        itemType: constants[mediaType].itemType,
+                        provider: provider,
+                    }).$promise;
                 },
                 thumbnailProfiles: function (viewType) {
                     return thumbnailProfiles(constants[mediaType].parentItemType, viewType);
