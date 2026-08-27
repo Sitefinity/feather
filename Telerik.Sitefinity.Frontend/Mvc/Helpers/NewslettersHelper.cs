@@ -1,4 +1,5 @@
-﻿using Telerik.Sitefinity.Configuration;
+﻿using System;
+using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Modules.Newsletters;
 using Telerik.Sitefinity.Modules.Newsletters.Configuration;
 using Telerik.Sitefinity.Modules.Newsletters.Web;
@@ -22,8 +23,18 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Helpers
 
             var newsLetterItem = httpContext.Items.Contains(NewslettersModule.IsNewsletter) ? (bool)httpContext.Items[NewslettersModule.IsNewsletter] : false;
 
+            Uri referrer = null;
+            try
+            {
+                referrer = httpContext.Request.UrlReferrer;
+            }
+            catch (UriFormatException)
+            {
+                // The Referer header contains a malformed URI - treat it as missing.
+            }
+
             var isNewsletter = newsLetterItem
-                    || (httpContext.Request.UrlReferrer != null && httpContext.Request.UrlReferrer.AbsolutePath.ToLower().Contains("/sitefinity/sfnwslttrs/"))
+                    || (referrer != null && referrer.AbsolutePath.ToLower().Contains("/sitefinity/sfnwslttrs/"))
                     || (httpContext.Request.Url != null && httpContext.Request.Url.AbsolutePath.ToLower().Contains("/sitefinity/sfnwslttrs/"));
 
             return isNewsletter;

@@ -719,6 +719,54 @@ namespace Telerik.Sitefinity.Frontend.Mvc.StringResources
         }
 
         /// <summary>
+        /// phrase: A document approval workflow is active. Upload and send documents for approval in Content > Documents & Files. Once approved, they will be available to select in this widget.
+        /// </summary>
+        /// <value>A document approval workflow is active. Upload and send documents for approval in Content > Documents & Files. Once approved, they will be available to select in this widget.</value>
+        [ResourceEntry("WorkflowSkipNotAllowedMessage",
+            Value = "A document approval workflow is active. Upload and send documents for approval in Content > Documents & Files. Once approved, they will be available to select in this widget.",
+            Description = "phrase: A document approval workflow is active. Upload and send documents for approval in Content > Documents & Files. Once approved, they will be available to select in this widget.",
+            LastModified = "2026/02/17")]
+        public string WorkflowSkipNotAllowedMessage
+        {
+            get
+            {
+                return this["WorkflowSkipNotAllowedMessage"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: A video approval workflow is active. Upload and send videos for approval in Content > Videos. Once approved, they will be available to select in this widget.
+        /// </summary>
+        /// <value>A video approval workflow is active. Upload and send videos for approval in Content > Videos. Once approved, they will be available to select in this widget.</value>
+        [ResourceEntry("WorkflowSkipNotAllowedMessageVideos",
+            Value = "A video approval workflow is active. Upload and send videos for approval in Content > Videos. Once approved, they will be available to select in this widget.",
+            Description = "phrase: A video approval workflow is active. Upload and send videos for approval in Content > Videos. Once approved, they will be available to select in this widget.",
+            LastModified = "2026/02/25")]
+        public string WorkflowSkipNotAllowedMessageVideos
+        {
+            get
+            {
+                return this["WorkflowSkipNotAllowedMessageVideos"];
+            }
+        }
+
+        /// <summary>
+        /// phrase: An image approval workflow is active. Upload and send images for approval in Content > Images. Once approved, they will be available to select in this widget.
+        /// </summary>
+        /// <value>An image approval workflow is active. Upload and send images for approval in Content > Images. Once approved, they will be available to select in this widget.</value>
+        [ResourceEntry("WorkflowSkipNotAllowedMessageImages",
+            Value = "An image approval workflow is active. Upload and send images for approval in Content > Images. Once approved, they will be available to select in this widget.",
+            Description = "phrase: An image approval workflow is active. Upload and send images for approval in Content > Images. Once approved, they will be available to select in this widget.",
+            LastModified = "2026/02/25")]
+        public string WorkflowSkipNotAllowedMessageImages
+        {
+            get
+            {
+                return this["WorkflowSkipNotAllowedMessageImages"];
+            }
+        }
+
+        /// <summary>
         /// phrase: or simply drag & drop it here
         /// </summary>
         /// <value>or simply drag & drop it here</value>

@@ -638,14 +638,17 @@
                     };
 
                     scope.switchToUploadMode = function () {
-                        scope.isInUploadMode = !scope.isInUploadMode;
-                        // clear filter selection
-                        scope.filters.basic.selected = null;
-                        scope.filters.library.selected = [];
-                        scope.filters.date.selected = [];
-                        scope.filters.tag.selected = [];
-                        scope.filters.category.selected = [];
-                        scope.error = null;
+                        sfMediaService.documents.workflowCheck(scope.provider).then(function (result) {
+                            scope.workflowSkipAllowed = result.WorkflowSkipAllowed;
+                            scope.isInUploadMode = !scope.isInUploadMode;
+                            // clear filter selection
+                            scope.filters.basic.selected = null;
+                            scope.filters.library.selected = [];
+                            scope.filters.date.selected = [];
+                            scope.filters.tag.selected = [];
+                            scope.filters.category.selected = [];
+                            scope.error = null;
+                        });
                     };
 
                     /*

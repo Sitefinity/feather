@@ -926,7 +926,7 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         private IQueryable<IDataItem> GetRelatedItems(IDataItem relatedItem, int page, ref int? totalCount)
         {
             var manager = this.GetManager();
-            var relatedDataSource = manager.Provider as IRelatedDataSource;
+            var relatedDataSource = manager as IRelatedDataSource;
 
             if (relatedDataSource == null)
                 return Enumerable.Empty<IDataItem>().AsQueryable();
