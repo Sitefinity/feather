@@ -31,10 +31,7 @@
     border-bottom: 1px solid #e5e5e5
     width: 100%
 
-    .k-item.k-active::after
-        border-color: #e5e5e5
-
-    .k-item
+    .k-tabstrip-item
       margin-bottom: -1px
       text-transform: none
       background: none
@@ -64,6 +61,10 @@
         background-color: #fff
         border: 1px solid #e5e5e5
         border-bottom-color: transparent
+
+        &::after
+            border-color: #e5e5e5
+            background: none
 
     .k-loading
       border: none

@@ -282,14 +282,21 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
             switch (this.ContentViewDisplayMode)
             {
                 case ContentViewDisplayMode.Detail:
-                    location.Filters.Add(this.CompileSingleItemFilterExpression(location.ContentType)); ;
+                    var singleItemFilter = this.CompileSingleItemFilterExpression(location.ContentType);
+                    if (singleItemFilter != null)
+                    {
+                        location.Filters.Add(singleItemFilter);
+                    }
 
                     return new[] { location };
                 case ContentViewDisplayMode.Automatic:
                     if (this.SelectionMode == SelectionMode.SelectedItems && string.IsNullOrEmpty(this.FilterExpression))
                     {
                         var masterAndLiveIdsList = this.GetMasterAndLiveIdsFromSelection();
-                        location.Filters.Add(new ItemsSelectionLocationFilter(masterAndLiveIdsList.Select(x => x.ToString())));
+                        if (masterAndLiveIdsList.Any())
+                        {
+                            location.Filters.Add(new ItemsSelectionLocationFilter(masterAndLiveIdsList.Select(x => x.ToString())));
+                        }
                     }
                     else
                     {
@@ -599,8 +606,13 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
                 throw new ArgumentException("The type must be Content or Dynamic content");
             }
 
-            var selectedItemGuid = this.selectedItemsIds.Select(id => new Guid(id)).SingleOrDefault();
-            return ContentLocatableViewExtensions.GetSingleItemFilter(selectedItemGuid, itemType, this.GetManager());
+            var selectedItemGuids = this.selectedItemsIds.Select(id => new Guid(id));
+            if (selectedItemGuids.Count() != 1)
+            {
+                return null;
+            }
+
+            return ContentLocatableViewExtensions.GetSingleItemFilter(selectedItemGuids.Single(), itemType, this.GetManager());
         }
 
         /// <summary>
@@ -654,7 +666,11 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Models
         protected virtual void PopulateListViewModel(int page, IQueryable<IDataItem> query, ContentListViewModel viewModel)
         {
             int? totalPages = null;
-            if (this.SelectionMode == Models.SelectionMode.SelectedItems && (this.selectedItemsIds.Count == 0 || string.IsNullOrEmpty(this.GetSelectedItemsFilterExpression())))
+            if (this.ContentViewDisplayMode == ContentViewDisplayMode.Detail && this.SelectionMode != Models.SelectionMode.SelectedItems)
+            {
+                viewModel.Items = Enumerable.Empty<ItemViewModel>();
+            }
+            else if (this.SelectionMode == Models.SelectionMode.SelectedItems && (this.selectedItemsIds.Count == 0 || string.IsNullOrEmpty(this.GetSelectedItemsFilterExpression())))
             {
                 viewModel.Items = Enumerable.Empty<ItemViewModel>();
             }

@@ -1,5 +1,5 @@
 ﻿<div class="modal-header">
-    <button type="button" class="close" ng-click="cancelUpload()">
+    <button type="button" class="close" ng-click="cancelUpload()" ng-disabled="model.uploadInProgress">
       <i class="fa fa-times"></i>
     </button>
     <h3 class="modal-title">@(Res.Get<ClientComponentsResources>().UploadImage)</h3>
@@ -14,7 +14,7 @@
                 <span class="sf-Progress-title" ng-bind="model.file.name" title="{{model.file.name}}"></span>
                 <div class="sf-Progress-options">
                   <span ng-bind="model.file.textSize"></span>
-                  <a type="button" class="sf-Progress-close" ng-click="cancelUpload()">
+                  <a type="button" class="sf-Progress-close" ng-hide="model.uploadInProgress" ng-click="cancelUpload()">
                     <i class="fa fa-times"></i>
                   </a>
                 </div>
@@ -71,6 +71,6 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()" ng-disabled="!model.title || !model.parentId || (altTextRequired && !model.alternativeText)">@(Res.Get<ClientComponentsResources>().Upload)</button>
-    <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()">@(Res.Get<ClientComponentsResources>().Cancel)</button>
+    <button type="button" class="btn btn-primary pull-left" ng-click="uploadImage()" ng-disabled="!model.title || !model.parentId || (altTextRequired && !model.alternativeText) || model.uploadInProgress">@(Res.Get<ClientComponentsResources>().Upload)</button>
+    <button type="button" class="btn btn-link  pull-left" ng-click="cancelUpload()" ng-disabled="model.uploadInProgress">@(Res.Get<ClientComponentsResources>().Cancel)</button>
 </div>

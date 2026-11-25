@@ -58,6 +58,14 @@ namespace Telerik.Sitefinity.Frontend.Resources
                     }
                     
                     context.Response.Cache.VaryByParams.SetParams(new string[] { "v" });
+
+                    // Versioned resources are content addressed by the "v" query string parameter, so their URL changes whenever the content changes.
+                    // For them omit the "Vary: *" header that ASP.NET emits for VaryByParams, so that proxies and CDNs can cache the response.
+                    // Resources requested without a version parameter keep the "Vary: *" header, because their URL stays the same when the content changes.
+                    if (!string.IsNullOrEmpty(context.Request.QueryString["v"]))
+                    {
+                        context.Response.Cache.SetOmitVaryStar(true);
+                    }
                 }
                 else
                 {

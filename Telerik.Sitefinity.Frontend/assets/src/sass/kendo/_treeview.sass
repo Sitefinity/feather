@@ -9,7 +9,8 @@
 
 	.k-treeview-top,
 	.k-treeview-mid,
-	.k-treeview-bot
+	.k-treeview-bot,
+	.k-treeview-item-content
 		&:has(> .k-treeview-toggle)
 			padding-left: 16px
 
@@ -24,6 +25,29 @@
 
 			.k-icon
 				left: 10px
+
+	// Restore caret-alt toggle icons (Kendo 2026 changed the TreeView toggle icons from carets to chevrons)
+	.k-svg-i-chevron-right > svg > path,
+	.k-svg-i-chevron-down > svg > path
+		display: none
+
+	.k-svg-i-chevron-right > svg,
+	.k-svg-i-chevron-down > svg
+		background-color: currentColor
+		-webkit-mask-repeat: no-repeat
+		mask-repeat: no-repeat
+		-webkit-mask-position: center
+		mask-position: center
+		-webkit-mask-size: contain
+		mask-size: contain
+
+	.k-svg-i-chevron-right > svg
+		-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M352 256 160 384V128z'/%3E%3C/svg%3E")
+		mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M352 256 160 384V128z'/%3E%3C/svg%3E")
+
+	.k-svg-i-chevron-down > svg
+		-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 352 128 160h256z'/%3E%3C/svg%3E")
+		mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 352 128 160h256z'/%3E%3C/svg%3E")
 
 	.k-icon
 		margin: 0
@@ -41,7 +65,8 @@
 		padding-left: 20px
 		position: relative
 
-		> div
+		> div,
+		> .k-treeview-item-content
 			position: relative
 
 	// Parent element of the link below
