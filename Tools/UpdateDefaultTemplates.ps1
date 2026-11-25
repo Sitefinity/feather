@@ -46,6 +46,11 @@ function UpdateDefaultTemplateFile($templatesDictionary, $fileKey, $hash, $fileI
 {
     try 
     {
+        if(!$hash)
+        {
+            return $false
+        }
+
         if($templatesDictionary."$fileKey" -and $templatesDictionary."$fileKey".Contains($hash))
         {
             $newTemplateFile = "$($newTemplatesDirectory)\$($templatesDictionaryName)\$($fileKey)"
@@ -85,6 +90,78 @@ function UpdateDefaultTemplateFile($templatesDictionary, $fileKey, $hash, $fileI
     return $false
 }
 
+function CopyMissingScripts($packageDirectory, $templatesDictionaryName)
+{
+    $newScriptsDirectory = "$($newTemplatesDirectory)\$($templatesDictionaryName)\scripts"
+    if(!(Test-Path -LiteralPath $newScriptsDirectory))
+    {
+        return
+    }
+
+    $destinationDirectory = Join-Path $packageDirectory "scripts"
+    Get-ChildItem -LiteralPath $newScriptsDirectory -Filter "*.js" -File | %{
+        $destinationFile = Join-Path $destinationDirectory $_.Name
+        if(!(Test-Path -LiteralPath $destinationFile))
+        {
+            try
+            {
+                Write-Host "Add missing build script '$destinationFile'..."
+                New-Item -ItemType Directory -Path $destinationDirectory -Force | Out-Null
+                Copy-Item -LiteralPath $_.FullName -Destination $destinationFile
+            }
+            catch
+            {
+                Write-Host "FAILED to add '$destinationFile' build script! Error: $_"
+            }
+        }
+    }
+}
+
+function IsKnownUnmodifiedFile($templatesDictionary, $fileKey, $filePath)
+{
+    $hash = GetFileSHA256HashUTF8 -filePath $filePath
+    return [bool]($hash -and $templatesDictionary."$fileKey" -and $templatesDictionary."$fileKey".Contains($hash))
+}
+
+# package.json and package-lock.json must be updated together, and only when the build scripts they call exist.
+# Otherwise 'npm ci' fails because the two files do not match, or the npm scripts call missing files.
+function GetBuildToolingFilesToSkip($packageDirectory, $templatesDictionary, $templatesDictionaryName)
+{
+    $toolingFiles = @("package.json", "package-lock.json")
+    $newPackageDirectory = "$($newTemplatesDirectory)\$($templatesDictionaryName)"
+
+    foreach($toolingFile in $toolingFiles)
+    {
+        $customerFile = Join-Path $packageDirectory $toolingFile
+        if((Test-Path -LiteralPath $customerFile) -and !(IsKnownUnmodifiedFile -templatesDictionary $templatesDictionary -fileKey $toolingFile -filePath $customerFile))
+        {
+            Write-Host "'$customerFile' is customized. The package.json and package-lock.json files are not updated."
+            return $toolingFiles
+        }
+    }
+
+    $newScriptsDirectory = "$newPackageDirectory\scripts"
+    $newPackageJson = "$newPackageDirectory\package.json"
+    $destinationScriptsDirectory = Join-Path $packageDirectory "scripts"
+    $scriptsAreMissing = $false
+    if(Test-Path -LiteralPath $newScriptsDirectory)
+    {
+        $scriptsAreMissing = @(Get-ChildItem -LiteralPath $newScriptsDirectory -Filter "*.js" -File | ?{ !(Test-Path -LiteralPath (Join-Path $destinationScriptsDirectory $_.Name)) }).Count -gt 0
+    }
+    elseif((Test-Path -LiteralPath $newPackageJson) -and ((Get-Content -LiteralPath $newPackageJson) -match "node scripts/"))
+    {
+        $scriptsAreMissing = $true
+    }
+
+    if($scriptsAreMissing)
+    {
+        Write-Host "The build scripts required by the new package.json are missing in '$packageDirectory'. The package.json and package-lock.json files are not updated."
+        return $toolingFiles
+    }
+
+    return @()
+}
+
 Get-ChildItem $resourcePackagesDirectory -Directory | %{
     $templatesDirectory = $_.FullName
     if(Test-Path (Join-Path $templatesDirectory "MVC\Views"))
@@ -103,8 +180,20 @@ Get-ChildItem $resourcePackagesDirectory -Directory | %{
         }
 
         Write-Host "Processing '$templatesDirectory' templates directory..."
+        # Packages that are not identified as Bootstrap 5 are matched by file hashes only, which cannot guarantee that package.json and package-lock.json stay a matching pair.
+        $buildToolingFilesToSkip = @("package.json", "package-lock.json")
+        if($bootstrapVersion -ne $null)
+        {
+            CopyMissingScripts -packageDirectory $templatesDirectory -templatesDictionaryName $bootstrapVersion
+            $buildToolingFilesToSkip = @(GetBuildToolingFilesToSkip -packageDirectory $templatesDirectory -templatesDictionary $currentBootstrapDictionary -templatesDictionaryName $bootstrapVersion)
+        }
         Get-ChildItem $templatesDirectory -Recurse -File | %{
             $file = $_.FullName.Replace($templatesDirectory, "").TrimStart("\")
+            if($file -like "node_modules\*" -or $buildToolingFilesToSkip -contains $file)
+            {
+                return
+            }
+
             $hash = GetFileSHA256HashUTF8 -filePath $_.FullName
 
             if($bootstrapVersion -eq $null)

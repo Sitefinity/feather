@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Telerik.Sitefinity.Configuration;
 using Telerik.Sitefinity.Data;
 using Telerik.Sitefinity.DynamicModules;
+using Telerik.Sitefinity.Frontend.Mvc.Models;
 using Telerik.Sitefinity.Model;
 using Telerik.Sitefinity.Modules.Pages;
 using Telerik.Sitefinity.Mvc;
@@ -107,6 +108,25 @@ namespace Telerik.Sitefinity.Frontend.Mvc.Infrastructure.Controllers
             }
 
             this.ViewBag.Metadata = metadataProperties;
+        }
+
+        /// <summary>
+        /// Determines whether the widget is configured to show selected items and has at least one selected item id.
+        /// </summary>
+        /// <param name="selectionMode">The selection mode of the widget's model.</param>
+        /// <param name="serializedSelectedItemsIds">The serialized ids of the selected items.</param>
+        /// <returns>
+        ///   <c>true</c> if the selection mode is <see cref="SelectionMode.SelectedItems"/> and at least one item id is selected; otherwise, <c>false</c>.
+        /// </returns>
+        protected bool HasSerializedSelectedItems(SelectionMode selectionMode, string serializedSelectedItemsIds)
+        {
+            if (selectionMode != SelectionMode.SelectedItems)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(serializedSelectedItemsIds))
+                return false;
+
+            return serializedSelectedItemsIds.Trim().Trim('[', ']').Trim().Length > 0;
         }
 
         /// <summary>

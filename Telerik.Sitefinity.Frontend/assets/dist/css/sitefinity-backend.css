@@ -9424,11 +9424,7 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   width: 100% !important;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-tabstrip-items .k-item.k-active::after {
-  border-color: #e5e5e5 !important;
-}
-
-:root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-tabstrip-items .k-item {
+:root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-tabstrip-items .k-tabstrip-item {
   margin-bottom: -1px !important;
   text-transform: none !important;
   background: none !important;
@@ -9468,6 +9464,11 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   border-bottom-color: transparent !important;
 }
 
+:root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-tabstrip-items .k-active .k-link::after {
+  border-color: #e5e5e5 !important;
+  background: none !important;
+}
+
 :root:root:root:root:root .sf-backend-wrp .k-tabstrip.k-tabstrip--selection .k-tabstrip-items .k-loading {
   border: none !important;
 }
@@ -9487,32 +9488,63 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
 
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle),
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle),
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle) {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle),
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item-content:has(> .k-treeview-toggle) {
   padding-left: 16px !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle) a,
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle) a,
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle) a {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle) a,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item-content:has(> .k-treeview-toggle) a {
   padding-left: 14px !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle) svg,
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle) svg,
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle) svg {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle) svg,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item-content:has(> .k-treeview-toggle) svg {
   width: 16px !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle):has(> .k-checkbox-wrap),
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle):has(> .k-checkbox-wrap),
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle):has(> .k-checkbox-wrap),
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item-content:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) {
   padding-left: 0px !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-top:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) .k-icon,
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-mid:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) .k-icon,
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) .k-icon {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-bot:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) .k-icon,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item-content:has(> .k-treeview-toggle):has(> .k-checkbox-wrap) .k-icon {
   left: 10px;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-svg-i-chevron-right > svg > path,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-svg-i-chevron-down > svg > path {
+  display: none;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-svg-i-chevron-right > svg,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-svg-i-chevron-down > svg {
+  background-color: currentColor !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-repeat: no-repeat !important;
+  -webkit-mask-position: center !important;
+  mask-position: center !important;
+  -webkit-mask-size: contain !important;
+  mask-size: contain !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-svg-i-chevron-right > svg {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M352 256 160 384V128z'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M352 256 160 384V128z'/%3E%3C/svg%3E") !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-svg-i-chevron-down > svg {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 352 128 160h256z'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 352 128 160h256z'/%3E%3C/svg%3E") !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-icon {
@@ -9533,7 +9565,8 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
   position: relative;
 }
 
-:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item > div {
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item > div,
+:root:root:root:root:root .sf-backend-wrp .k-treeview.k-treeview--list-group .k-treeview-item > .k-treeview-item-content {
   position: relative;
 }
 
@@ -10741,6 +10774,10 @@ fieldset[disabled] :root:root:root:root:root .sf-backend-wrp .navbar-inverse .bt
 :root:root:root:root:root .sf-backend-wrp .nav > li > a:hover {
   background: none !important;
   border-color: transparent !important;
+}
+
+:root:root:root:root:root .sf-backend-wrp .nav > li > a:focus {
+  outline: none !important;
 }
 
 :root:root:root:root:root .sf-backend-wrp tab {

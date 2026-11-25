@@ -803,6 +803,7 @@
 
             var successAction = function (data) {
                 data = data || {};
+                $scope.model.uploadInProgress = false;
                 $uibModalInstance.close(data[0]);
             };
 
@@ -812,10 +813,16 @@
 
             var errorAction = function (err) {
                 console.log(err);
+                $scope.model.uploadInProgress = false;
                 $uibModalInstance.dismiss();
             };
 
             $scope.uploadImage = function () {
+                if ($scope.model.uploadInProgress) {
+                    return;
+                }
+
+                $scope.model.uploadInProgress = true;
                 sfMediaService.images.upload($scope.model, sfProvider).then(successAction, errorAction, progressAction);
             };
 
